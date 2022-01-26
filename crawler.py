@@ -1,4 +1,8 @@
 import requests
+import networkx as nx
+import matplotlib
+from pyvis.network import Network
+
 import os
 import re
 
@@ -8,13 +12,14 @@ class Crawler:
         self.template = template
         self.root_page = root_page
         self.pages = set()
-        self.graph = []
+        self.graph = nx.MultiDiGraph()
+        self.network = Network()
 
     # Method to parse url and extract html
     def parse(self, page):
         '''
         cmd = 'curl https://lomando.com/main.html | grep "\.html"'
-        1
+
         os.system(cmd)
         '''
     
@@ -36,13 +41,25 @@ class Crawler:
             children = set(self.parse(parent))
             queue = queue + list(children - self.pages)
             
-            # Adding graph edges
+            # Adding graph nodes and edges
+            self.graph.add_node(parent)
             for child in children:
-                self.graph.append((parent, child))
+                self.graph.add_edge(parent, child)
     
     # Method to return a sorted list of the visited pages
     def sorted_pages(self):
         return sorted(list(self.pages))
+    
+    # Method to plot digraph with matplotlib
+    def plot(self):
+        nx.draw(self.graph, with_labels=True)
+    
+    # Method to plot digraph with pyvis
+    def plot_pretty(self):
+        net = Network()
+        net.from_nx(self.graph)
+        net.show("visual.html")
+        self.network = net
 
 if __name__ == "__main__":
     # Initializing
@@ -50,15 +67,25 @@ if __name__ == "__main__":
     crawler = Crawler("https://lomando.com/", "main.html")
     print(crawler.template + crawler.root_page)
     print()
-
-    # Test for parse function
+    
+    '''
+    # Test for parse method
     print("Testing parse function:")
     print(crawler.parse("main.html"))
     print(set(crawler.parse("main.html")))
     print()
+    '''
 
-    # Test for crawl function
+    # Test for crawl method
     print("Testing crawl funciton:")
     crawler.crawl()
     print(crawler.sorted_pages())
     print(crawler.graph)
+ 
+    '''   
+    # Testing draw with matplotlib
+    crawler.plot()
+    '''
+
+    # Testing draw with pyvis
+    crawler.plot_pretty()
