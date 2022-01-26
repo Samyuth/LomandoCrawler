@@ -1,7 +1,9 @@
 import requests
 import networkx as nx
 import matplotlib
+import matplotlib.pyplot as plt
 from pyvis.network import Network
+import numpy as np
 
 import os
 import re
@@ -52,7 +54,9 @@ class Crawler:
     
     # Method to plot digraph with matplotlib
     def plot(self):
-        nx.draw(self.graph, with_labels=True)
+        pos = nx.spring_layout(self.graph, scale=20, k=3/np.sqrt(self.graph.order()))
+        plt.figure(3,figsize=(9,9))
+        nx.draw(self.graph, pos, with_labels=True)
     
     # Method to plot digraph with pyvis
     def plot_pretty(self):
@@ -68,13 +72,11 @@ if __name__ == "__main__":
     print(crawler.template + crawler.root_page)
     print()
     
-    '''
     # Test for parse method
     print("Testing parse function:")
     print(crawler.parse("main.html"))
     print(set(crawler.parse("main.html")))
     print()
-    '''
 
     # Test for crawl method
     print("Testing crawl funciton:")
@@ -82,10 +84,8 @@ if __name__ == "__main__":
     print(crawler.sorted_pages())
     print(crawler.graph)
  
-    '''   
     # Testing draw with matplotlib
     crawler.plot()
-    '''
-
+    
     # Testing draw with pyvis
     crawler.plot_pretty()
