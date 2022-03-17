@@ -5,67 +5,84 @@ Created on Wed Mar 16 02:05:23 2022
 @author: Sagi
 """
 
-import requests
-import bs4
+import re
 
-# Gets all the valid encodings from python 3 for Japanese
-# Takes as input a list of valid languages eg. ["Japanese"] and
-# optionally a flag to test every encoding or not
-# Returns a tuple with a list of valid encodings and their aliases
-def get_language_encodings(valid_langs, every=False):
-    
-    encodings = []
-    aliases = []
-    
-    response = requests.get("https://docs.python.org/3.7/library/codecs.html#standard-encodings")
-    
-    soup = bs4.BeautifulSoup(response.content, 'html.parser')
-    
-    tables = soup.findAll("table", {"class": "docutils align-default"})
-    
-    for table in tables:
-        headers = table.find("thead").findAll("th")
-        
-        if (headers[0].text == "Codec" and headers[2].text == "Languages"):
-            encoding_table = table
-    
-    for row in encoding_table.findAll("tr"):
-        cells = row.findAll("td")
-        
-        if (len(cells) > 0 and ((cells[2].text in valid_langs) or every == True)):
-            encodings.append(cells[0].text)
-    
-    return (encodings, aliases)
+class Node():
+    def __init__(self, label=None, text=None):
+        if label is not None:
+            self.label = label
+        else:
+            self.label = None
 
-# Function to try a single encoding
-# Takes as input an encoding
-# Returns true if the encoding is valid, false if not
-def try_encoding(encoding):
-    try:
-        nscript = open("nscript.dat", encoding=encoding)
-        nscript.readline()
-        nscript.close()
-        return True
-
-    except:
-        return False
-
-# Function to try all encodings
-# Returns a list of all valid encodings
-def try_encodings():
-    encodings, aliases = get_language_encodings(["Japanese", "all languages"], True)
-    valid_encodings = []
-    
-    for encoding in encodings:
-        if (try_encoding(encoding)):
-            valid_encodings.append(encoding)
-    
-    return valid_encodings
+        if text is not None:
+            self.text = text
+        else:
+            self.text = None
             
+    def get_text(self):
+        if self.text:
+            return self.text
+        else:
+            return None
+
+    def get_label(self):
+        if self.label:
+            return self.label
+        else:
+            return None
+    
+    def add_text(self, text):
+        self.text += text
+
+    def change_label(self, label):
+        self.label = label
+
+class ChoiceNode(Node):
+    pass
     
 if __name__ == "__main__":
-    valid_encodings = try_encodings()
+    #valid_encodings = try_encodings()
     
-    print(valid_encodings)
+    #print(valid_encodings)
 
-    nscript = open("nscript.dat", encoding="cp932")
+    nscript = open("./nsdec/NSDEC/result.txt", encoding="cp932")
+    line = nscript.readline()
+    
+    header = open("./parsed_texts/header.txt", "w", encoding="cp932")
+    remaining = open("./parsed_texts/remaining.txt", "w", encoding="cp932")
+    choices = open("./parsed_texts/choices.txt", "w", encoding="cp932")
+    
+    choice_nodes = []
+    nodes = []
+    nodes_present = False
+
+    while (line and line.strip() != "*start"):
+        header.writelines(line)
+        line = nscript.readline()
+    
+    while (line and line.strip() != "; $Id: 4.txt 1282 2006-08-04 18:12:29Z chendo $"):
+        if re.match("^;-BLOCK.*$", line):
+            nodes_present = True
+            choice_nodes.append(ChoiceNode(text=""))
+        if nodes_present:
+            choice_nodes[-1].add_text(line)
+        if re.match("^\*f", line):
+            choice_nodes[-1].change_label(line.strip())
+
+        choices.writelines(line)
+        line = nscript.readline()
+    
+    nodes_size = 0
+    
+    while (line):
+        if re.match("^\*", line):
+            nodes.append(Node(line))
+        remaining.writelines(line)
+        line = nscript.readline()        
+
+    nscript.close()
+    header.close()
+    remaining.close()
+    choices.close()
+    
+    choice_nodes = list(filter(lambda x: x.get_label() is not None, choice_nodes))
