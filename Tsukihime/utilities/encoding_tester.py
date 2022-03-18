@@ -68,7 +68,7 @@ def get_language_encodings(valid_langs, every=False):
     return encodings
 
 # Function to try a single encoding
-# Takes as input an encoding and the file to try
+# Takes as input an encoding and the absolute path file to try
 # Returns true if the encoding is valid, false if not
 def try_encoding(encoding, filename):
     try:
