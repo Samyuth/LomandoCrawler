@@ -1,14 +1,14 @@
 import requests
 import networkx as nx
-import matplotlib
 import matplotlib.pyplot as plt
 from pyvis.network import Network
 import numpy as np
+from Graph import *
 
 import os
 import re
 
-class Crawler:
+class Crawler(Graph):
     # Constructor
     def __init__(self, template, root_page):
         self.template = template
@@ -51,21 +51,9 @@ class Crawler:
     # Method to return a sorted list of the visited pages
     def sorted_pages(self):
         return sorted(list(self.pages))
-    
-    # Method to plot digraph with matplotlib
-    def plot(self):
-        pos = nx.spring_layout(self.graph, scale=20, k=3/np.sqrt(self.graph.order()))
-        plt.figure(3,figsize=(9,9))
-        nx.draw(self.graph, pos, with_labels=True)
-    
-    # Method to plot digraph with pyvis
-    def plot_pretty(self):
-        net = Network()
-        net.from_nx(self.graph)
-        net.show("visual.html")
-        self.network = net
 
 if __name__ == "__main__":
+    
     # Initializing
     print("Testing initialization:")
     crawler = Crawler("https://lomando.com/", "main.html")
