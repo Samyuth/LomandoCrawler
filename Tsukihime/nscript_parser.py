@@ -165,5 +165,8 @@ if __name__ == "__main__":
     parser = NscriptParser()
     choice_nodes = parser.parse()
     
-    parser.plot()
-    parser.plot_pretty()
+    levels = parser.get_leveled_tree()
+    for level in levels:
+        print(level)
+    #parser.plot()
+    #parser.plot_pretty()
