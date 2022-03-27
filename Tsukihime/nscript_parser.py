@@ -31,14 +31,10 @@ select `1. There's only a few minutes until homeroom. I have to head there right
 '''
 
 import re
-from Graph import Graph
-import networkx as nx
-import matplotlib.pyplot as plt
-from pyvis.network import Network
-import numpy as np
+from Graph import *
 
 class TextNode():
-    def __init__(self, label=None, text=None):
+    def __init__(self, label=None, text=None, children=None):
         if label is not None:
             self.label = label
         else:
@@ -47,7 +43,12 @@ class TextNode():
         if text is not None:
             self.text = text
         else:
-            self.text = None
+            self.text = ""
+        
+        if children is not None:
+            self.children = children
+        else:
+            self.children = []
             
     def get_text(self):
         if self.text:
@@ -68,7 +69,7 @@ class TextNode():
         self.label = label
     
     def add_children(self, children):
-        self.children = children
+        self.children += children
 
 class ChoiceNode(TextNode):
     def add_choices(self, choices):
@@ -124,7 +125,7 @@ class NscriptParser(Graph):
             line = nscript.readline()
         
         while (line and line.strip() != "; $Id: 4.txt 1282 2006-08-04 18:12:29Z chendo $"):
-            if re.match("^;-BLOCK.*$", line):
+            if re.match("\*f.*", line):
                 nodes_present = True
                 choice_nodes.append(TsukihimeNode(text=""))
             if nodes_present:
@@ -135,19 +136,17 @@ class NscriptParser(Graph):
             choices.writelines(line)
             line = nscript.readline()
         
-        nodes_size = 0
-        
         while (line):
             if re.match("^\*", line):
                 nodes.append(TextNode(line))
             remaining.writelines(line)
             line = nscript.readline()        
-    
+
         nscript.close()
         header.close()
         remaining.close()
         choices.close()
-        
+
         choice_nodes = list(filter(lambda x: x.get_label() is not None, choice_nodes))
         for node in choice_nodes:
             node.parse_text()
@@ -165,7 +164,6 @@ if __name__ == "__main__":
     
     parser = NscriptParser()
     choice_nodes = parser.parse()
-
-    net = Network()
-    net.from_nx(parser.graph)
-    net.show("visual.html")
+    
+    parser.plot()
+    parser.plot_pretty()

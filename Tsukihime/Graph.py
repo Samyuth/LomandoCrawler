@@ -19,7 +19,7 @@ class Graph:
     # Method to plot digraph with matplotlib
     def plot(self):
         pos = nx.spring_layout(self.graph, scale=20, k=3/np.sqrt(self.graph.order()))
-        plt.figure(3,figsize=(9,9))
+        plt.figure(3,figsize=(20,40))
         nx.draw(self.graph, pos, with_labels=True)
     
     # Method to plot digraph with pyvis
