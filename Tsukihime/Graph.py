@@ -77,7 +77,8 @@ class Graph:
         # DFS for all the starting nodes
         for node in sources:
             self._tree_generator(0, node)
-            
+           
+    # getting the max level size as well as label length
     def __get_max_level_size(self):
         if (len(self._levels) == 0):
             self._create_leveled_tree()
@@ -86,10 +87,13 @@ class Graph:
         for level in self._levels:
             if len(level) > max_size:
                 max_size = len(level)
-        return max_size
+        # getting max node label width width
+        max_len = max([len(node) for node in graph.nodes])
+        return (max_size, max_len)
     
+    # Calculating sideways tree string array
     def __format_leveled_tree_sideways(self):
-        max_size = self.__get_max_level_size()
+        max_size, max_len = self.__get_max_level_size()
         
         # output array
         rows = [""] * (2 * max_size - 1)
@@ -105,16 +109,16 @@ class Graph:
                 width = 2*len(self.graph.out_edges(node)) - 1
                 # if the node has no children or it was already printed
                 if width == -1 or node in found:
-                    rows[pos] += node
+                    rows[pos] += "{0:^{1}}".format(node, max_len)
                     found.add(node)
                     continue  
                 
                 for i in range(width):
                     # print of actual node
                     if i == width // 2:
-                        rows[pos] += node + " -"
+                        rows[pos] += "{0:^{1}}".format(node, max_len) + " -"
                     else:
-                        rows[pos] += " " + "  "
+                        rows[pos] += " " * max_len + "  "
                     
                     # print pipe if tree has multiple children
                     if width > 1:
@@ -135,7 +139,11 @@ class Graph:
         
         return rows
     
-    # sideways tree output
+    # Calculating vertical tree string array
+    def __format_leveled_tree_vertical(self):
+        max_size = self.__get_max_level_size()
+    
+    # Sideways tree output
     def output_tree_sideways(self):
         rows = self.__format_leveled_tree_sideways()
         
@@ -149,17 +157,17 @@ class Graph:
         
 if __name__ == "__main__":
     graph = nx.MultiDiGraph()
-    graph.add_node("a")
+    graph.add_node("abc")
     graph.add_node("b")
     graph.add_node("c")
     graph.add_node("d")
     graph.add_node("e")
     graph.add_node("f")
     graph.add_node("z")
-    graph.add_edge("b", "a")
+    graph.add_edge("b", "abc")
     graph.add_edge("b", "c")
     graph.add_edge("c", "d")
-    graph.add_edge("a", "d")
+    graph.add_edge("abc", "d")
     graph.add_edge("d", "e")
     graph.add_edge("e", "f")  
     graph.add_edge("z", "c")
