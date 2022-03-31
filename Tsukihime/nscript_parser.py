@@ -165,8 +165,9 @@ if __name__ == "__main__":
     parser = NscriptParser()
     choice_nodes = parser.parse()
     
-    levels = parser.get_leveled_tree()
-    for level in levels:
-        print(level)
+    output = parser.output_tree_sideways()
+    
+    with open("ouput.txt", "w") as outfile:
+        outfile.write(output)
     #parser.plot()
     #parser.plot_pretty()

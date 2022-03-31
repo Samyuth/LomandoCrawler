@@ -12,11 +12,11 @@ import numpy as np
 
 '''
 Ascii format for leveled tree
-  |-B---D
-A-|
-  |-C---D---E
+   |- B --- D --- E --- F
+A -|
+   |- C --- D
 
-Z---C
+Z --- C
 
 '''
 
@@ -30,8 +30,8 @@ class Graph:
         else:
             self.graph = nx.MultiDiGraph()
             self.network = Network()
-        self.__levels = []
-        self.__found = set()
+        self._levels = []
+        self._found = set()
 
     # Method to plot digraph with matplotlib
     def plot(self):
@@ -54,43 +54,117 @@ class Graph:
                 sources.append(node)
         return sources
     
-    def __tree_generator(self, depth, node):
-        if depth == len(self.__levels):
-            self.__levels.append([])
+    def _tree_generator(self, depth, node):
+        if depth == len(self._levels):
+            self._levels.append([])
         
-        self.__levels[depth].append(node)
+        self._levels[depth].append(node)
         
         out_edges = self.graph.out_edges(node)
         
-        if len(out_edges) == 0 or node in self.__found:
+        if len(out_edges) == 0 or node in self._found:
             return
         
-        self.__found.add(node)
+        self._found.add(node)
         
         for edge in out_edges:
-            self.__tree_generator(depth+1, edge[1])
+            self._tree_generator(depth+1, edge[1])
         
     # Returns a leveled tree structure
     # Driver function for generation algorithm
-    def __create_leveled_tree(self):
+    def _create_leveled_tree(self):
         sources = self.find_sources()
         # DFS for all the starting nodes
         for node in sources:
-            self.__tree_generator(0, node)
+            self._tree_generator(0, node)
+            
+    def __get_max_level_size(self):
+        if (len(self._levels) == 0):
+            self._create_leveled_tree()
+        max_size = 0
+        # getting max width
+        for level in self._levels:
+            if len(level) > max_size:
+                max_size = len(level)
+        return max_size
+    
+    def __format_leveled_tree_sideways(self):
+        max_size = self.__get_max_level_size()
+        
+        # output array
+        rows = [""] * (2 * max_size - 1)
+        
+        # set for if the node has already been printed or not
+        found = set()
+        
+        # populating the array
+        for level in self._levels:
+            pos = 0
+            for node in level:
+                # width to print
+                width = 2*len(self.graph.out_edges(node)) - 1
+                # if the node has no children or it was already printed
+                if width == -1 or node in found:
+                    rows[pos] += node
+                    found.add(node)
+                    continue  
+                
+                for i in range(width):
+                    # print of actual node
+                    if i == width // 2:
+                        rows[pos] += node + " -"
+                    else:
+                        rows[pos] += " " + "  "
+                    
+                    # print pipe if tree has multiple children
+                    if width > 1:
+                        rows[pos] += "|"
+                    else:
+                        rows[pos] += "-"
+                       
+                    # print dash if it leads to a child node
+                    if i % 2 == 0:
+                        rows[pos] += "- "
+                    else:
+                        rows[pos] += "  "
+                        
+                    pos += 1
+                
+                found.add(node)
+                pos += 1
+        
+        return rows
+    
+    # sideways tree output
+    def output_tree_sideways(self):
+        rows = self.__format_leveled_tree_sideways()
+        
+        return "\n".join(rows)
     
     # Getter for the leveled tree structure
     def get_leveled_tree(self):
-        self.__create_leveled_tree()
-        return self.__levels
+        self._create_leveled_tree()
+        return self._levels
+    
         
 if __name__ == "__main__":
     graph = nx.MultiDiGraph()
     graph.add_node("a")
     graph.add_node("b")
     graph.add_node("c")
+    graph.add_node("d")
+    graph.add_node("e")
+    graph.add_node("f")
+    graph.add_node("z")
     graph.add_edge("b", "a")
     graph.add_edge("b", "c")
+    graph.add_edge("c", "d")
+    graph.add_edge("a", "d")
+    graph.add_edge("d", "e")
+    graph.add_edge("e", "f")  
+    graph.add_edge("z", "c")
     
     true_graph = Graph(graph)
     
     print(true_graph.get_leveled_tree())
+    print(true_graph.output_tree_sideways())
