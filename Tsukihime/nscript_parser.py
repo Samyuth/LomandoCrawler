@@ -165,6 +165,7 @@ if __name__ == "__main__":
     parser = NscriptParser()
     choice_nodes = parser.parse()
     
+    leveled_tree = parser.get_leveled_tree()
     output = parser.output_tree_sideways()
     
     with open("ouput.txt", "w") as outfile:
