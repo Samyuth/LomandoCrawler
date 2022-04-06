@@ -86,15 +86,20 @@ class Graph:
     # Recursively obtain the leaves obrained for all nodes in a path
     def __find_num_descendents(self, node):
         out_edges = self.graph.out_edges(node)
-        self._num_descendents[node] = 0
         
+        # only increment if you reach a leaf
         if len(out_edges) == 0:
+            self._num_descendents[node] = 0
             return 1
+        elif node in self._num_descendents:
+            return 0
+        
+        self._num_descendents[node] = 0
         
         for edge in out_edges:
             # Memoizing
             if edge[1] in self._num_descendents:
-                self._num_descendents[node] += self._num_descendents[edge[1]]
+                self._num_descendents[node] += 1
             else:
                 self._num_descendents[node] += self.__find_num_descendents(edge[1])
         
@@ -193,7 +198,9 @@ class Graph:
         self.__rows = [[" "] * str_depth for i in range(2 * max_width - 1)]
         self._found = set()
 
-        self.__build_tree_string(self._levels[0][0], 0, max_len, 0)
+        pos = 0
+        for node in self._levels[0]:
+            pos = self.__build_tree_string(node, pos, max_len, 0)
         
         return "\n".join(["".join(self.__rows[i]) for i in range(len(self.__rows))])
         
