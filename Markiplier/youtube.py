@@ -58,7 +58,28 @@ class Crawler(Graph):
 
 
         return nodes
+       
+    # Method to relabel the network x nodes
+    def relabel(self, nodes):
+        names = dict()
+        for node in nodes:
+            print(node, flush=True)
+            if node["name"] not in names:
+                names[node["name"]] = []
+            names[node["name"]].append(node)
         
+        for name in names:
+            if len(names[name]) == 1:
+                continue
+            for i in range(len(names[name])):
+                names[name][i]["name"] += " ({0})".format(i+1)
+        
+        mapping = {}
+        for node in nodes:
+            mapping[node["id"]] = node["name"]
+        self.graph = nx.relabel_nodes(self.graph, mapping)
+    
+    # Method to actually crawl the videos
     def crawl(self):
         # Initializing queue with root
         queue = [{
@@ -90,6 +111,10 @@ class Crawler(Graph):
                 if item[key] not in finished and item[key] not in queue:
                     queue.append(item[key])
                 '''
+        
+        self.relabel(finished)
+        
+        return finished
 
 
 def get_data(videoId, key):
@@ -143,7 +168,8 @@ if __name__ == "__main__":
     print(videoIds)
     print(titles)
     '''
-    fandom = Crawler("mGtFUm-sgh4", "Markiplier in Space Part 1", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qc")
+    fandom = Crawler("j64oZLF443g", "Markiplier in Space Part 1", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qc")
     fandom.parse("mGtFUm-sgh4")
-    fandom.crawl()
+    nodes = fandom.crawl()
     fandom.plot_pretty()
+    print()
