@@ -1,11 +1,11 @@
 <html>
     <head>
         <!-- Base template taken from the pyvis .show() method -->
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script> -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" /> -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
 
-        <script type="text/javascript" src="./node_modules/vis-network/dist/vis-network.js" />
-        <script type="text/css" src="./node_modules/vis-network/dist/dist/vis-network.css"></script>
+        <!-- <script type="text/javascript" src="../node_modules/vis-network/dist/vis-network.js" /> -->
+        <script type="text/css" src="../node_modules/vis-network/dist/dist/vis-network.css"></script>
         <style type="text/css">
                 #mynetwork {
                     width: 100%;
@@ -34,12 +34,16 @@
 
             
             // This method is responsible for drawing the graph, returns the drawn network
-            drawGraph = () => {
+            drawGraph = async () => {
                 var container = document.getElementById('mynetwork');
                 
+                var data = await fetch("/markiplier")
+                    .then(response => response.json())
+                    .catch(err => console.log(err));
+
                 // parsing and collecting nodes and edges from the python
-                nodes = new vis.DataSet([{"id": "j64oZLF443g", "label": "Markiplier in Space Part 1", "shape": "dot"}, {"id": "mGtFUm-sgh4", "label": "Fix Life Support", "shape": "dot"}, {"id": "raIqPgW-quI", "label": "Put Out the Fire", "shape": "dot"}]);
-                edges = new vis.DataSet([{"from": "j64oZLF443g", "to": "mGtFUm-sgh4"}, {"from": "j64oZLF443g", "to": "raIqPgW-quI"}]);
+                nodes = new vis.DataSet(data.nodes);
+                edges = new vis.DataSet(data.edges);
 
                 // adding nodes and edges to the graph
                 data = {nodes: nodes, edges: edges};
@@ -79,8 +83,6 @@
                     }
                 };
                 
-                
-
                 
 
                 network = new vis.Network(container, data, options);

@@ -2,9 +2,10 @@
   "name": "lomandocrawler",
   "version": "1.0.0",
   "description": "This project initially started to parse the choice based creepy pasta style webgame [Lomando](https://lomando.com/) into a graph representation. It can now do the same for the visual novel game Tsukihme which was built with the NScripter Engine.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,11 @@
   },
   "homepage": "https://github.com/Samyuth/LomandoCrawler#readme",
   "dependencies": {
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
     "vis-network": "^9.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

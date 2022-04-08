@@ -3,6 +3,8 @@ Tsukihime/utilities/script.html
 Tsukihime/nsdec
 Tsukihime/nscript.dat
 */__pycache__
-*/visual*.html
-node_modules/
+Lomando/visual*.html
+Markiplier/visual*.html
+Tsukihime/visual*.html
+/NODE-UI/node_modules/
 */network.json
