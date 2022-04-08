@@ -101,6 +101,12 @@ class Crawler(Graph):
                 for child in children:
                     print(child)
                     self.graph.add_edge(parent["id"], child["id"])
+                    self.network.add_node(parent["id"],
+                                          label=parent["name"])
+                    self.network.add_node(child["id"],
+                                          label=child["name"])
+                    self.network.add_edge(parent["id"], child["id"])
+                    
             
             if (children is None):
                 continue
@@ -115,6 +121,9 @@ class Crawler(Graph):
         self.relabel(finished)
         
         return finished
+
+    def plot_pretty(self):
+        self.network.show("visual2.html")
 
 
 def get_data(videoId, key):
@@ -171,5 +180,7 @@ if __name__ == "__main__":
     fandom = Crawler("j64oZLF443g", "Markiplier in Space Part 1", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qc")
     fandom.parse("mGtFUm-sgh4")
     nodes = fandom.crawl()
-    fandom.plot_pretty()
+    #fandom.plot((20,40))
+    #fandom.plot_pretty()
+    fandom.output_network_json()
     print()

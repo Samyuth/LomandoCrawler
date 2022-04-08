@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <!-- Base template taken from the pyvis .show() method -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script> -->
+
+        <script type="text/javascript" src="./node_modules/vis-network/dist/vis-network.js" />
+        <script type="text/css" src="./node_modules/vis-network/dist/dist/vis-network.css"></script>
+        <style type="text/css">
+                #mynetwork {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #ffffff;
+                    border: 1px solid lightgray;
+                    position: relative;
+                    float: left;
+                }        
+        </style>
+
+    </head>
+
+    <body>
+        <div id = "mynetwork"></div>
+
+
+        <script type="text/javascript">
+
+            // initialize global variables.
+            var edges;
+            var nodes;
+            var network; 
+            var container;
+            var options, data;
+
+            
+            // This method is responsible for drawing the graph, returns the drawn network
+            drawGraph = () => {
+                var container = document.getElementById('mynetwork');
+                
+                // parsing and collecting nodes and edges from the python
+                nodes = new vis.DataSet([{"id": "j64oZLF443g", "label": "Markiplier in Space Part 1", "shape": "dot"}, {"id": "mGtFUm-sgh4", "label": "Fix Life Support", "shape": "dot"}, {"id": "raIqPgW-quI", "label": "Put Out the Fire", "shape": "dot"}]);
+                edges = new vis.DataSet([{"from": "j64oZLF443g", "to": "mGtFUm-sgh4"}, {"from": "j64oZLF443g", "to": "raIqPgW-quI"}]);
+
+                // adding nodes and edges to the graph
+                data = {nodes: nodes, edges: edges};
+
+                var options = {
+                    "configure": {
+                        "enabled": false
+                    },
+                    "edges": {
+                        "color": "black",
+                    "arrows": {
+                        "to": true
+                    },
+                        "smooth": {
+                            "enabled": false,
+                            "type": "continuous"
+                        },
+                    },
+                    "nodes": {
+                        "color": "red",
+                        "shadow": true,
+                    },
+                    "interaction": {
+                        "dragNodes": true,
+                        "hideEdgesOnDrag": false,
+                        "hideNodesOnDrag": false
+                    },
+                    "physics": {
+                        "enabled": true,
+                        "stabilization": {
+                            "enabled": true,
+                            "fit": true,
+                            "iterations": 1000,
+                            "onlyDynamicEdges": false,
+                            "updateInterval": 50
+                        }
+                    }
+                };
+                
+                
+
+                
+
+                network = new vis.Network(container, data, options);
+
+                network.on("doubleClick", (params => {
+                    console.log(params.nodes[0]);
+                    window.open('https://www.youtube.com/watch?v=' + params.nodes[0], '_blank');
+                }));
+
+                
+
+                return network;
+
+            }
+
+            drawGraph();
+
+        </script>
+    </body>
+</html>

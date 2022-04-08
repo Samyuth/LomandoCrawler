@@ -3,4 +3,6 @@ Tsukihime/utilities/script.html
 Tsukihime/nsdec
 Tsukihime/nscript.dat
 */__pycache__
-*/visual.html
+*/visual*.html
+node_modules/
+*/network.json
