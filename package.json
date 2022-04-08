@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Samyuth/LomandoCrawler/issues"
   },
-  "homepage": "https://github.com/Samyuth/LomandoCrawler#readme"
+  "homepage": "https://github.com/Samyuth/LomandoCrawler#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
+    "vis-network": "^9.1.2"
+  }
 }
