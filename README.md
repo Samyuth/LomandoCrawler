@@ -3,6 +3,8 @@ This project initially started to parse the choice based creepy pasta style webg
 
 Future plans include building a gui to interact with this graph representation. Currently pyvis and networkx are used for visualization.
 
+Adittionally now any choice based youtube storyline can be parsed and if the network.json file rendered is placed in the root of the Node-UI directory and a node.js server started a dynamic graph chart will be displayed on localhost:3000.
+
 ## Dependencies
 ### Python:
 * networkx
@@ -14,3 +16,9 @@ Future plans include building a gui to interact with this graph representation. 
 ### Tsukihime (to be placed in Tsukihime/):
 * nscript.dat from Tsukihime game files
 * [NSDec](http://nscripter.insani.org/sdk.html) decompiler for the nscript.dat
+### Node UI
+* node.js
+* express
+* fs
+* path
+* vis-network
