@@ -135,6 +135,8 @@ class Crawler(Graph):
         data["edges"] = self.edges
         with open("network.json", "w") as outfile:
             outfile.write(json.dumps(data, indent=4))
+        with open("../Node-UI/network.json", "w") as outfile:
+            outfile.write(json.dumps(data, indent=4))
 
 
 def get_data(videoId, key):

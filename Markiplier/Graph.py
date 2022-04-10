@@ -37,3 +37,5 @@ class Graph:
         data["edges"] = self.network.edges
         with open("network.json", "w") as outfile:
             outfile.write(json.dumps(data, indent=4))
+        with open("../Node-UI/network.json", "w") as outfile:
+            outfile.write(json.dumps(data, indent=4))
