@@ -69,8 +69,6 @@ class Crawler(Graph):
             items = player_json["endscreen"]["endscreenRenderer"]["elements"]
         else:
             return None
-        
-        video_details = player_json["videoDetails"]
     
         nodes = []
         for item in items:
@@ -78,7 +76,7 @@ class Crawler(Graph):
             node["label"] = item["endscreenElementRenderer"]["title"]["runs"][0]["text"]
             node["id"] = item["endscreenElementRenderer"]["endpoint"]["watchEndpoint"]["videoId"]
             node["shape"] = "image"
-            url = video_details["thumbnail"]["thumbnails"][0]["url"]
+            url = item["endscreenElementRenderer"]["image"]["thumbnails"][0]["url"]
             node["image"] = re.sub("[a-z]*default?", "maxresdefault", url)
             nodes.append(node)
 
