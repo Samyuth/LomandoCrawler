@@ -1,8 +1,11 @@
 import requests
 import json
+import sys
+import re
 
 from Graph import *
-import re
+
+RENDER_QUALITIES = {"default", "hqdefault", "mqdefault", "sddefault", "maxresdefault"}
 
 headers = {
 'authority' : 'www.youtube.com',
@@ -33,7 +36,12 @@ data = {"videoId":None,"context":{"client":{"hl":"en","gl":"US","remoteHost":"26
 
 class Crawler(Graph):  
 
-    def __init__(self, root_vid_id, key):
+    def __init__(self, root_vid_id, key, render_quality):
+        if (render_quality not in RENDER_QUALITIES):
+            print("ERROR:", render_quality, "is not a valid render quality")
+            print("choose among", str(RENDER_QUALITIES))
+            sys.exit()
+        self.render_quality = render_quality
         self.root_vid_id = root_vid_id
         self.key = key
         self.graph = nx.MultiDiGraph()
@@ -43,6 +51,9 @@ class Crawler(Graph):
 
         link = "https://www.youtube.com/youtubei/v1/player?key=" + self.key + "W8&prettyPrint=true"
         response = requests.post(link, headers=headers, json=data)
+        if (response.status_code != 200):
+            print("ERROR: Root url was not valid, status code", response.status_code, "recieved")
+            sys.exit()
         
         response_data = response.text
         response_json = json.loads(response.text)
@@ -50,7 +61,7 @@ class Crawler(Graph):
         thumbnail_url = video_details["thumbnail"]["thumbnails"][0]["url"]
         
         self.root_vid_name = video_details["title"]
-        self.root_vid_thumbnail = re.sub("[a-z]*default?", "maxresdefault", thumbnail_url)
+        self.root_vid_thumbnail = re.sub("[a-z]*default?", self.render_quality, thumbnail_url)
         
         self.nodes = dict()
         self.edges = []
@@ -77,7 +88,7 @@ class Crawler(Graph):
             node["id"] = item["endscreenElementRenderer"]["endpoint"]["watchEndpoint"]["videoId"]
             node["shape"] = "image"
             url = item["endscreenElementRenderer"]["image"]["thumbnails"][0]["url"]
-            node["image"] = re.sub("[a-z]*default?", "maxresdefault", url)
+            node["image"] = re.sub("[a-z]*default?", self.render_quality, url)
             nodes.append(node)
 
         return nodes
@@ -188,7 +199,9 @@ if __name__ == "__main__":
     print(videoIds)
     print(titles)
     '''
-    fandom = Crawler("j64oZLF443g", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qc")
+    fandom = Crawler(root_vid_id="j64oZLF443g",
+        key = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qc",
+        render_quality="default")
     node = fandom.parse("mGtFUm-sgh4")
     print(node)
     nodes = fandom.crawl()
