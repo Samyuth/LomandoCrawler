@@ -106,8 +106,16 @@ class Crawler(Graph):
         queue = [self.root_vid_id]
         finished = []
 
+        # Part 2 nodes
+        part2 = False
+        queue2 = ["xAOv_zvXBQk"]
+
         # Going till queue empty
-        while (len(queue) > 0):
+        while (len(queue) > 0 or len(queue2) > 0):
+            if (len(queue) == 0):
+                part2 = True
+                queue = queue2
+
             parent = queue.pop(0)
     
             print(parent, flush=True)
@@ -121,12 +129,19 @@ class Crawler(Graph):
                     self.graph.add_edge(parent, child["id"])
                     
                     self.nodes[child["id"]] = child
-                    self.edges.append({"from": parent, "to": child["id"]})
+
+                    if part2 == True:
+                        self.edges.append({"from": parent, "to": child["id"], "color": "blue"})
+                    else:
+                        self.edges.append({"from": parent, "to": child["id"], "color": "red"})
 
             
             if (children is None):
                 continue
             for item in children:
+                ## skip appending part2
+                if item["id"] == "xAOv_zvXBQk":
+                    continue
                 if item["id"] not in finished and item["id"] not in queue:
                     queue.append(item["id"])
                 '''
