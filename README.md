@@ -22,3 +22,7 @@ Adittionally now any choice based youtube storyline can be parsed and if the net
 * fs
 * path
 * vis-network
+
+## References and docs
+
+[NScriptr API](http://nscripter.insani.org/reference/)
