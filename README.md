@@ -22,7 +22,12 @@ Adittionally now any choice based youtube storyline can be parsed and if the net
 * fs
 * path
 * vis-network
+### Electron UI
+* node.js
+* react.js
+* electron.js
 
 ## References and docs
 
 [NScriptr API](http://nscripter.insani.org/reference/)
+[Creating an Electron App](https://www.section.io/engineering-education/desktop-application-with-react/)
