@@ -167,8 +167,9 @@ if __name__ == "__main__":
     
     leveled_tree = parser.get_leveled_tree()
     output = parser.output_tree_sideways()
-    
+    '''
     with open("ouput.txt", "w") as outfile:
         outfile.write(output)
+    '''
     #parser.plot()
     #parser.plot_pretty()
