@@ -26,8 +26,18 @@ Adittionally now any choice based youtube storyline can be parsed and if the net
 * node.js
 * react.js
 * electron.js
+* flask
+
+## Running the application
+
+For the most part many of the python scripts are indepenedent and can be run simply typeing ```python SCRIPT_NAME```
+
+### Electron UI
+
+To run this, in one terminal run ```python server.py``` and in another run ```npm run dev```.
 
 ## References and docs
 
 [NScriptr API](http://nscripter.insani.org/reference/)
 [Creating an Electron App](https://www.section.io/engineering-education/desktop-application-with-react/)
+[Electron Guide](https://medium.com/folkdevelopers/the-ultimate-guide-to-electron-with-react-8df8d73f4c97)

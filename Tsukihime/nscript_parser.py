@@ -32,6 +32,7 @@ select `1. There's only a few minutes until homeroom. I have to head there right
 
 import re
 from Graph import *
+import json
 
 class TextNode():
     def __init__(self, label=None, text=None, children=None):
@@ -166,10 +167,8 @@ if __name__ == "__main__":
     choice_nodes = parser.parse()
     
     leveled_tree = parser.get_leveled_tree()
-    output = parser.output_tree_sideways()
-    '''
-    with open("ouput.txt", "w") as outfile:
-        outfile.write(output)
-    '''
+    #output = parser.output_tree_sideways()
+    with open("../Electron-UI/server/leveled_tree.json", "w") as outfile:
+        outfile.write(json.dumps(leveled_tree))
     #parser.plot()
     #parser.plot_pretty()
