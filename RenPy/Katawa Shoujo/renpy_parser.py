@@ -5,9 +5,11 @@ graph = nx.MultiDiGraph()
 
 f = open("RenPy\\Katawa Shoujo\\imachine.rpy", "r")
 visited = []
+branchlist = []
 choice_dictionary = {}
 prevline = ""
 for line in f:
+    
     if prevline != "":
         line = prevline
         prevline = ""
@@ -20,8 +22,12 @@ for line in f:
         if nodename not in visited:
             graph.add_node(nodename)
             visited.append(nodename)
+        for branch in branchlist:
+            print(branch)
+            graph.add_edge(branch, nodename)
         choice_dictionary[nodename] = set()
         loop = True
+        branchlist = []
         while(loop == True):
             line = f.readline()
             if "jump_out" in line:
@@ -46,6 +52,7 @@ for line in f:
                 if(secondnode != nodename):
                     #print("{} | {}".format(nodename, secondnode))
                     graph.add_edge(nodename, secondnode)
+                    branchlist.append(secondnode)
             if "label" in line:
                 loop = False
             if "# Decompiled by unrpyc:" in line:
