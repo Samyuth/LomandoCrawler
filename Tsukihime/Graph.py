@@ -126,7 +126,7 @@ class Graph:
         # Creating the leveled tree
         self._create_leveled_tree()
 
-        # Trimming down the leveled tree and graph
+        # Trimming down the leveled tree and graph, every node only has one parent now
         trimmed = Graph()
         trimmed.graph = self.graph.copy()
         trimmed._levels = []
@@ -135,15 +135,57 @@ class Graph:
             for node in self._levels[i]:
                 # Adding the node
                 if node not in trimmed._found:
-                    trimmed._levels[i].append((node, True))
+                    trimmed._levels[i].append([node, True])
                     trimmed._found.add(node)
                 # Making the node a reference
                 else:
-                    trimmed._levels[i].append((node, False))
+                    trimmed._levels[i].append([node, False])
                     trimmed.graph.remove_edges_from(list(trimmed.graph.out_edges(node))) # Remove outgoing edges
-        trimmed.__find_num_descendents()
+        
+        # Finding the new number of descendents in the trimmed tree
+        sources = trimmed.find_sources()
+        for node in sources:
+            trimmed.__find_num_descendents(node)
 
-        trimmed.plot_pretty()
+        # Getting the width and depth
+        width = sum([trimmed._num_descendents[node[0]] for node in trimmed._levels[0]])
+        depth = len(trimmed._levels)
+
+        # Creating the final mapping
+        node_mapping = dict()
+        parent = None
+        for i in range(len(trimmed._levels)):
+            start = 0
+            for node in trimmed._levels[i]:
+                # Finding the parent
+                old_parent = parent
+                parent = list(trimmed.graph.in_edges(node))
+                print(parent)
+                if len(parent) > 0:
+                    parent = parent[0][0]
+                else:
+                    parent = False
+
+                # Checking if the parent is the same as the previous node
+                if old_parent == parent:
+                    parent = False
+
+                # Updating the start if needed
+                if parent and parent in node_mapping:
+                    start = node_mapping[parent][1]
+
+                # Calculaitons for the coordinates
+                end = start + (1 if (node[1] == False or trimmed._num_descendents[node[0]] == 0)
+                    else trimmed._num_descendents[node[0]])
+
+                node.append(start) # start x
+                node.append(end) # end x
+                node.append(i) # y
+
+                start = end
+
+                # Updating the node mapping
+                node_mapping[node[0]] = node[1:]
 
         output = ""
         for level in trimmed._levels:
@@ -153,7 +195,6 @@ class Graph:
         
 if __name__ == "__main__":
     graph = nx.MultiDiGraph()
-    graph.add_node("abc")
     graph.add_node("a")
     graph.add_node("b")
     graph.add_node("c")
@@ -161,14 +202,13 @@ if __name__ == "__main__":
     graph.add_node("e")
     graph.add_node("f")
     graph.add_node("z")
-    graph.add_edge("b", "abc")
-    graph.add_edge("b", "a")
-    graph.add_edge("b", "c")
-    graph.add_edge("c", "d")
-    graph.add_edge("abc", "d")
-    graph.add_edge("d", "e")
-    graph.add_edge("e", "f")  
+    graph.add_edge("a", "b")
+    graph.add_edge("a", "c")
     graph.add_edge("z", "c")
+    graph.add_edge("b", "d")
+    graph.add_edge("c", "d")
+    graph.add_edge("d", "e")
+    graph.add_edge("e", "f")
     
     true_graph = Graph(graph)
     
