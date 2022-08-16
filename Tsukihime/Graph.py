@@ -107,8 +107,9 @@ class Graph:
     def get_num_descendents(self):
         return self._num_descendents
         
-    # Using BFS to generate a leveled tree
+    # Generates the leveled tree structure
     def _create_leveled_tree(self):
+        self._levels = []
         # Use BFS to generate a leveled tree
         queue1 = [[node, None] for node in self.find_sources()] # first index is the node, second is the parent
         queue2 = []
@@ -142,53 +143,65 @@ class Graph:
         self._create_leveled_tree()
         return self._levels
 
-    # Sideways tree output
-    def __str__(self):
+    # Getting a format that is usable for rendering on the frontend
+    def get_grid_map_output(self):
         # Creating the leveled tree
         self._create_leveled_tree()
 
-        # # Getting the width and depth
-        # width = sum([trimmed._num_descendents[node[0]] for node in trimmed._levels[0]])
-        # depth = len(trimmed._levels)
+        # Initializing the number of descendents
+        for node in self.find_sources():
+            self.__find_num_descendents(node)
 
-        # # Creating the final mapping
-        # node_mapping = dict()
-        # parent = None
-        # for i in range(len(trimmed._levels)):
-        #     start = 0
-        #     for node in trimmed._levels[i]:
-        #         # Finding the parent
-        #         old_parent = parent
-        #         parent = list(trimmed.graph.in_edges(node))
-        #         print(parent)
-        #         if len(parent) > 0:
-        #             parent = parent[0][0]
-        #         else:
-        #             parent = False
+        # Creating the final mapping
+        node_mapping = dict()
+        for i in range(len(self._levels)):
+            start = 0
+            parent = None
+            for node in self._levels[i]:
+                # Finding the parent
+                old_parent = parent
+                parent = node[1]
 
-        #         # Checking if the parent is the same as the previous node
-        #         if old_parent == parent:
-        #             parent = False
+                # Checking if the parent is the same as the previous node
+                if old_parent == parent:
+                    parent = False
 
-        #         # Updating the start if needed
-        #         if parent and parent in node_mapping:
-        #             start = node_mapping[parent][1]
+                # Updating the start if needed
+                if parent != False and parent in node_mapping:
+                    start = node_mapping[parent][2]
 
-        #         # Calculaitons for the coordinates
-        #         end = start + (1 if (node[1] == False or trimmed._num_descendents[node[0]] == 0)
-        #             else trimmed._num_descendents[node[0]])
+                # Calculations for the coordinates
+                end = start + (1 if (node[2] == False or self._num_descendents[node[0]] == 0)
+                    else self._num_descendents[node[0]])
 
-        #         node.append(start) # start x
-        #         node.append(end) # end x
-        #         node.append(i) # y
+                node.append(start) # start x
+                node.append(end) # end x
+                node.append(i) # y
 
-        #         start = end
+                start = end
 
-        #         # Updating the node mapping
-        #         node_mapping[node[0]] = node[1:]
+                # Updating the node mapping
+                node_mapping[node[0]] = node[1:]
+
+        return node_mapping
+
+    # Sideways tree output
+    def __str__(self):
+        # Using this function to get a correct grid
+        self.get_grid_map_output()
+
+        # Output array
+        width = self._levels[0][-1][4]
+        depth = len(self._levels)
+        out_arr = [[None] * width for i in range(depth)]
+
+        for level in self._levels:
+            for node in level:
+                for i in range(node[3], node[4]):
+                    out_arr[node[5]][i] = node[0]
 
         output = ""
-        for level in self._levels:
+        for level in out_arr:
             output += str(level) + "\n"
         
         return output

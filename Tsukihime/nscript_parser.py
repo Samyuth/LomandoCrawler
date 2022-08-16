@@ -167,8 +167,10 @@ if __name__ == "__main__":
     choice_nodes = parser.parse()
     
     leveled_tree = parser.get_leveled_tree()
+    print(parser)
+    #parser.plot_pretty()
     #output = parser.output_tree_sideways()
-    with open("../Electron-UI/server/leveled_tree.json", "w") as outfile:
-        outfile.write(json.dumps(leveled_tree))
+    # with open("../Electron-UI/server/leveled_tree.json", "w") as outfile:
+    #     outfile.write(json.dumps(leveled_tree))
     #parser.plot()
     #parser.plot_pretty()
