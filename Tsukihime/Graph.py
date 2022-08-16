@@ -107,14 +107,35 @@ class Graph:
     def get_num_descendents(self):
         return self._num_descendents
         
-    # Returns a leveled tree structure
-    # Driver function for generation algorithm
+    # Using BFS to generate a leveled tree
     def _create_leveled_tree(self):
-        sources = self.find_sources()
-        # Call the builder functions for each of the starting nodes
-        for node in sources:
-            self.__tree_generator(0, node)
-            self.__find_num_descendents(node)
+        # Use BFS to generate a leveled tree
+        queue1 = [[node, None] for node in self.find_sources()] # first index is the node, second is the parent
+        queue2 = []
+        self._found = set()
+        while (len(queue1) > 0 or len(queue2) > 0):
+            self._levels.append([]) # adding a new level
+            # doing the search on a queue
+            while(len(queue1) > 0):
+                node = queue1.pop(0)
+
+                # Continuing the search or denoting a node as a reference
+                if (node[0] in self._found):
+                    node.append(False)
+                    self.graph.remove_edge(node[1], node[0])
+                    # self.graph.remove_edges_from(list(self.graph.out_edges(node[0])))
+                else:
+                    node.append(True)
+                    self._found.add(node[0])
+                    for edge in list(self.graph.out_edges(node[0])):
+                        queue2.append([edge[1], edge[0]])
+                
+                # Adding to the level
+                self._levels[-1].append(node)
+
+            # Swapping queues
+            queue1 = queue2
+            queue2 = []
 
     # Getter for the leveled tree structure
     def get_leveled_tree(self):
@@ -126,69 +147,48 @@ class Graph:
         # Creating the leveled tree
         self._create_leveled_tree()
 
-        # Trimming down the leveled tree and graph, every node only has one parent now
-        trimmed = Graph()
-        trimmed.graph = self.graph.copy()
-        trimmed._levels = []
-        for i in range(len(self._levels)):
-            trimmed._levels.append([])
-            for node in self._levels[i]:
-                # Adding the node
-                if node not in trimmed._found:
-                    trimmed._levels[i].append([node, True])
-                    trimmed._found.add(node)
-                # Making the node a reference
-                else:
-                    trimmed._levels[i].append([node, False])
-                    trimmed.graph.remove_edges_from(list(trimmed.graph.out_edges(node))) # Remove outgoing edges
-        
-        # Finding the new number of descendents in the trimmed tree
-        sources = trimmed.find_sources()
-        for node in sources:
-            trimmed.__find_num_descendents(node)
+        # # Getting the width and depth
+        # width = sum([trimmed._num_descendents[node[0]] for node in trimmed._levels[0]])
+        # depth = len(trimmed._levels)
 
-        # Getting the width and depth
-        width = sum([trimmed._num_descendents[node[0]] for node in trimmed._levels[0]])
-        depth = len(trimmed._levels)
+        # # Creating the final mapping
+        # node_mapping = dict()
+        # parent = None
+        # for i in range(len(trimmed._levels)):
+        #     start = 0
+        #     for node in trimmed._levels[i]:
+        #         # Finding the parent
+        #         old_parent = parent
+        #         parent = list(trimmed.graph.in_edges(node))
+        #         print(parent)
+        #         if len(parent) > 0:
+        #             parent = parent[0][0]
+        #         else:
+        #             parent = False
 
-        # Creating the final mapping
-        node_mapping = dict()
-        parent = None
-        for i in range(len(trimmed._levels)):
-            start = 0
-            for node in trimmed._levels[i]:
-                # Finding the parent
-                old_parent = parent
-                parent = list(trimmed.graph.in_edges(node))
-                print(parent)
-                if len(parent) > 0:
-                    parent = parent[0][0]
-                else:
-                    parent = False
+        #         # Checking if the parent is the same as the previous node
+        #         if old_parent == parent:
+        #             parent = False
 
-                # Checking if the parent is the same as the previous node
-                if old_parent == parent:
-                    parent = False
+        #         # Updating the start if needed
+        #         if parent and parent in node_mapping:
+        #             start = node_mapping[parent][1]
 
-                # Updating the start if needed
-                if parent and parent in node_mapping:
-                    start = node_mapping[parent][1]
+        #         # Calculaitons for the coordinates
+        #         end = start + (1 if (node[1] == False or trimmed._num_descendents[node[0]] == 0)
+        #             else trimmed._num_descendents[node[0]])
 
-                # Calculaitons for the coordinates
-                end = start + (1 if (node[1] == False or trimmed._num_descendents[node[0]] == 0)
-                    else trimmed._num_descendents[node[0]])
+        #         node.append(start) # start x
+        #         node.append(end) # end x
+        #         node.append(i) # y
 
-                node.append(start) # start x
-                node.append(end) # end x
-                node.append(i) # y
+        #         start = end
 
-                start = end
-
-                # Updating the node mapping
-                node_mapping[node[0]] = node[1:]
+        #         # Updating the node mapping
+        #         node_mapping[node[0]] = node[1:]
 
         output = ""
-        for level in trimmed._levels:
+        for level in self._levels:
             output += str(level) + "\n"
         
         return output
