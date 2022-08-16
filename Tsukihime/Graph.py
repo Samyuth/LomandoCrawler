@@ -168,7 +168,7 @@ class Graph:
 
                 # Updating the start if needed
                 if parent != False and parent in node_mapping:
-                    start = node_mapping[parent][2]
+                    start = node_mapping[parent][0][2]
 
                 # Calculations for the coordinates
                 end = start + (1 if (node[2] == False or self._num_descendents[node[0]] == 0)
@@ -181,7 +181,10 @@ class Graph:
                 start = end
 
                 # Updating the node mapping
-                node_mapping[node[0]] = node[1:]
+                if (node[2] == True):
+                    node_mapping[node[0]] = [node[1:]]
+                else:
+                    node_mapping[node[0]].append(node[1:])
 
         return node_mapping
 
