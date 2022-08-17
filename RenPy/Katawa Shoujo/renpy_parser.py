@@ -35,11 +35,12 @@ for line in f:
                 secondnode = jumpline[1][1:].strip()
                 #print(secondnode)
                 choice_dictionary[nodename].add(secondnode)
-                if secondnode not in visited:
+                if secondnode not in visited and "restart" not in secondnode:
                     graph.add_node(secondnode)
                     visited.append(secondnode)
                 #print("{} | {}".format(nodename, secondnode))
-                graph.add_edge(nodename, secondnode)
+                if "restart" not in secondnode:
+                    graph.add_edge(nodename, secondnode)
             elif "iscene" in line:
                 isceneline = line.split("iscene")
                 secondnode = isceneline[1].strip()
