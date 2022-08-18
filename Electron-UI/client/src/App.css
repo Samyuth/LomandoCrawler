@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.main-layout {
+  display: grid;
+  justify-items: center;
+}
+
+.node-button {
+  border-radius: 50%;
+  border: 0px;
+  height: 50px;
+  width: 50px;
+}

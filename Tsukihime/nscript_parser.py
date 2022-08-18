@@ -166,9 +166,15 @@ if __name__ == "__main__":
     parser = NscriptParser()
     choice_nodes = parser.parse()
     
-    leveled_tree = parser.get_leveled_tree()
+    parser.plot_pretty()
+
+    # leveled_tree = parser.get_leveled_tree()
+    grid_map = parser.get_grid_map_output()
+    with open("../Electron-UI/server/grid_map.json", "w") as outfile:
+        outfile.write(json.dumps(grid_map, indent=1))
     #output = parser.output_tree_sideways()
+    leveled_tree = parser._levels
     with open("../Electron-UI/server/leveled_tree.json", "w") as outfile:
-        outfile.write(json.dumps(leveled_tree))
+        outfile.write(json.dumps(leveled_tree, indent=1))
     #parser.plot()
     #parser.plot_pretty()
