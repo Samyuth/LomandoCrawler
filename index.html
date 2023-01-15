@@ -1,0 +1,2671 @@
+<html>
+    <head>
+        <!-- Base template taken from the pyvis .show() method -->
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" /> -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+        <!-- <script type="text/javascript" src="../node_modules/vis-network/dist/vis-network.js" /> -->
+        <script type="text/css" src="../node_modules/vis-network/dist/dist/vis-network.css"></script>
+        <style type="text/css">
+                #mynetwork {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #ffffff;
+                    border: 1px solid lightgray;
+                    position: relative;
+                    float: left;
+                }        
+        </style>
+
+    </head>
+
+    <body>
+        <div id = "mynetwork"></div>
+
+
+        <script type="text/javascript">
+
+            // initialize global variables.
+            var edges;
+            var nodes;
+            var network; 
+            var container;
+            var options, data;
+
+            
+            // This method is responsible for drawing the graph, returns the drawn network
+            drawGraph = async () => {
+                var container = document.getElementById('mynetwork');
+                
+                var data = {
+    "nodes": [
+        {
+            "label": "In Space with Markiplier: Part 1",
+            "id": "j64oZLF443g",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/j64oZLF443g/default.webp"
+        },
+        {
+            "label": "Fix Life Support",
+            "id": "mGtFUm-sgh4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/mGtFUm-sgh4/default.webp"
+        },
+        {
+            "label": "Put Out the Fire",
+            "id": "raIqPgW-quI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/raIqPgW-quI/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "HHlphhgN1kU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/HHlphhgN1kU/default.webp"
+        },
+        {
+            "label": "Wear a Disguise",
+            "id": "5eG8rFt_JuY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/5eG8rFt_JuY/default.webp"
+        },
+        {
+            "label": "Send Mark In",
+            "id": "NK-u4ukbOFw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/NK-u4ukbOFw/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "Dq1BrxAXQLg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Dq1BrxAXQLg/default.webp"
+        },
+        {
+            "label": "Fix it from the Outside!",
+            "id": "Rm7nK2x_FWQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Rm7nK2x_FWQ/default.webp"
+        },
+        {
+            "label": "Call for Backup",
+            "id": "8Figj37SoPg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/8Figj37SoPg/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "ogrmyhb5gNI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ogrmyhb5gNI/default.webp"
+        },
+        {
+            "label": "Send Mark in Again",
+            "id": "bYy_aAiTfYA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/bYy_aAiTfYA/default.webp"
+        },
+        {
+            "label": "Fix it from the Outside!",
+            "id": "uIMvjur42Vw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/uIMvjur42Vw/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "Tn1MkhNUaA4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Tn1MkhNUaA4/default.webp"
+        },
+        {
+            "label": "Blow IT up before IT blows YOU up!",
+            "id": "98bVPHiSY_k",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/98bVPHiSY_k/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "SKODGzV20LU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/SKODGzV20LU/default.webp"
+        },
+        {
+            "label": "Send Mark in... Again",
+            "id": "7P9mpmsLSno",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/7P9mpmsLSno/default.webp"
+        },
+        {
+            "label": "Fix it from the Outside!",
+            "id": "Y0Ja_BrgGhA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Y0Ja_BrgGhA/default.webp"
+        },
+        {
+            "label": "Wake the Crew",
+            "id": "ch07UcMzWkQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ch07UcMzWkQ/default.webp"
+        },
+        {
+            "label": "I Believe You",
+            "id": "uQO4CLQhKuY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/uQO4CLQhKuY/default.webp"
+        },
+        {
+            "label": "This Must be a Dream!",
+            "id": "5nZZAmvRIuU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/5nZZAmvRIuU/default.webp"
+        },
+        {
+            "label": "Go Towards the Light...",
+            "id": "HcfjRwNr89Q",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/HcfjRwNr89Q/default.webp"
+        },
+        {
+            "label": "Jump in Again!",
+            "id": "wKNzPHIk0EY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/wKNzPHIk0EY/default.webp"
+        },
+        {
+            "label": "Call an Emergency Meeting",
+            "id": "uoyvZ5mXiio",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/uoyvZ5mXiio/default.webp"
+        },
+        {
+            "label": "Jump in Again!",
+            "id": "bjxEL2A9F4Q",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/bjxEL2A9F4Q/default.webp"
+        },
+        {
+            "label": "Send a Distress Signal",
+            "id": "diaW8rX9CZg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/diaW8rX9CZg/default.webp"
+        },
+        {
+            "label": "Pop 'er in Reverse!",
+            "id": "CXUKjHzoMl4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/CXUKjHzoMl4/default.webp"
+        },
+        {
+            "label": "Jump in Again!",
+            "id": "Qbr2cyEgWS4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Qbr2cyEgWS4/default.webp"
+        },
+        {
+            "label": "Don't Attack",
+            "id": "g72tvDIu_Ys",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/g72tvDIu_Ys/default.webp"
+        },
+        {
+            "label": "Attack",
+            "id": "YBDAQclN9jQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/YBDAQclN9jQ/default.webp"
+        },
+        {
+            "label": "Send a Distress Signal",
+            "id": "QgImksN6b3M",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/QgImksN6b3M/default.webp"
+        },
+        {
+            "label": "Fire All Weapons At The Wormhole",
+            "id": "wfdMicitgnA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/wfdMicitgnA/default.webp"
+        },
+        {
+            "label": "We Need Your Help",
+            "id": "uj8TRJDz98E",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/uj8TRJDz98E/default.webp"
+        },
+        {
+            "label": "We Don't Need Your Help",
+            "id": "3cE9v0tdEGY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/3cE9v0tdEGY/default.webp"
+        },
+        {
+            "label": "Give Mark \"The Signal\"",
+            "id": "aM-uQMUO6i4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/aM-uQMUO6i4/default.webp"
+        },
+        {
+            "label": "Throw Down Your Weapons",
+            "id": "3De90tdLJmk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/3De90tdLJmk/default.webp"
+        },
+        {
+            "label": "Plan K",
+            "id": "FuQt2BhgCQo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/FuQt2BhgCQo/default.webp"
+        },
+        {
+            "label": "Use the Device",
+            "id": "17r42pf7kwY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/17r42pf7kwY/default.webp"
+        },
+        {
+            "label": "Open the Door",
+            "id": "NW-UYcqwDpU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/NW-UYcqwDpU/default.webp"
+        },
+        {
+            "label": "Don't Open the Door",
+            "id": "iMz8rZD_9hg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/iMz8rZD_9hg/default.webp"
+        },
+        {
+            "label": "Step in the Wormhole",
+            "id": "7iJoWgYwL7g",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/7iJoWgYwL7g/default.webp"
+        },
+        {
+            "label": "Well Now I'm Not Doing It!",
+            "id": "eoOePnBbGWY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/eoOePnBbGWY/default.webp"
+        },
+        {
+            "label": "Open the Door",
+            "id": "3TboquFEMFA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/3TboquFEMFA/default.webp"
+        },
+        {
+            "label": "Don't Open the Door",
+            "id": "jGGT5FHDhFI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/jGGT5FHDhFI/default.webp"
+        },
+        {
+            "label": "Call For Backup",
+            "id": "cjGsjagqkk4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/cjGsjagqkk4/default.webp"
+        },
+        {
+            "label": "Gunther! Think of the Colonists!",
+            "id": "szDl_uKbOJg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/szDl_uKbOJg/default.webp"
+        },
+        {
+            "label": "In Space with Markiplier: Part 2",
+            "id": "xAOv_zvXBQk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/xAOv_zvXBQk/default.webp"
+        },
+        {
+            "label": "Don't Open the Door",
+            "id": "4zQJNqRjadQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/4zQJNqRjadQ/default.webp"
+        },
+        {
+            "label": "Open the Door",
+            "id": "qeu7M8wIpyc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/qeu7M8wIpyc/default.webp"
+        },
+        {
+            "label": "Blow IT up before IT blows YOU up!",
+            "id": "VpyFw2-Cec4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/VpyFw2-Cec4/default.webp"
+        },
+        {
+            "label": "Burt! Think of the Colonists!",
+            "id": "DsZDtqK4f1A",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/DsZDtqK4f1A/default.webp"
+        },
+        {
+            "label": "We've Been Here Before",
+            "id": "fGewtUPe7TI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/fGewtUPe7TI/default.webp"
+        },
+        {
+            "label": "We've Never Been Here",
+            "id": "PteUZUCJ7iY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/PteUZUCJ7iY/default.webp"
+        },
+        {
+            "label": "Fix it from the Outside!",
+            "id": "MJM6QneZbVA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/MJM6QneZbVA/default.webp"
+        },
+        {
+            "label": "Celci! Think of the Colonists!",
+            "id": "-Yn4Z-mPKMM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/-Yn4Z-mPKMM/default.webp"
+        },
+        {
+            "label": "Hold on a second...",
+            "id": "g_ILOR7_mHw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/g_ILOR7_mHw/default.webp"
+        },
+        {
+            "label": "I'm Ready",
+            "id": "6cARNW6O4sY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/6cARNW6O4sY/default.webp"
+        },
+        {
+            "label": "Horror",
+            "id": "dXBkC_-72vA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/dXBkC_-72vA/default.webp"
+        },
+        {
+            "label": "Romance",
+            "id": "kcHe2hLE0PE",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/kcHe2hLE0PE/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "slYiLYLvdV0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/slYiLYLvdV0/default.webp"
+        },
+        {
+            "label": "Right",
+            "id": "sart_g4SXgM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/sart_g4SXgM/default.webp"
+        },
+        {
+            "label": "You're Not Mark!",
+            "id": "E-ElzbdMBYA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/E-ElzbdMBYA/default.webp"
+        },
+        {
+            "label": "Great Job Mack!",
+            "id": "GDOfnMYMens",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/GDOfnMYMens/default.webp"
+        },
+        {
+            "label": "You Look a Lot Like Markiplier...",
+            "id": "A8wiPLzzJ00",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/A8wiPLzzJ00/default.webp"
+        },
+        {
+            "label": "Maybe Markiplier is in This Very Room...",
+            "id": "WW5oaCBpZXo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/WW5oaCBpZXo/default.webp"
+        },
+        {
+            "label": "Aww, You Gonna Cry? Little Baby BooHoo? Little Baby Gonna CRY?!",
+            "id": "wE96fQwjPT4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/wE96fQwjPT4/default.webp"
+        },
+        {
+            "label": "It's Ok, Mark! You Can Cry!",
+            "id": "z3tvzYvfkkQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/z3tvzYvfkkQ/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "V2ucVWqe8p8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/V2ucVWqe8p8/default.webp"
+        },
+        {
+            "label": "Right",
+            "id": "S_znm-UIGAI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/S_znm-UIGAI/default.webp"
+        },
+        {
+            "label": "Hide",
+            "id": "Lf7aoSTCtwE",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Lf7aoSTCtwE/default.webp"
+        },
+        {
+            "label": "Run",
+            "id": "AkEXMKoUHEU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/AkEXMKoUHEU/default.webp"
+        },
+        {
+            "label": "Cut the Red Wire",
+            "id": "Pwo3-jlT8e0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Pwo3-jlT8e0/default.webp"
+        },
+        {
+            "label": "Cut the Blue Wire",
+            "id": "ctjK7eET3bo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ctjK7eET3bo/default.webp"
+        },
+        {
+            "label": "Mark, You Can't Go Back!",
+            "id": "kDIVnEgcOxU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/kDIVnEgcOxU/default.webp"
+        },
+        {
+            "label": "Open the Door",
+            "id": "YyObr8Mg2RU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/YyObr8Mg2RU/default.webp"
+        },
+        {
+            "label": "Don't Open the Door",
+            "id": "3J2f_HIEoxU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/3J2f_HIEoxU/default.webp"
+        },
+        {
+            "label": "The Captain Finds Mark",
+            "id": "NlK43-FvAG4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/NlK43-FvAG4/default.webp"
+        },
+        {
+            "label": "The Narrator Suffers a Terrible Fate",
+            "id": "e-sOd94VQYg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/e-sOd94VQYg/default.webp"
+        },
+        {
+            "label": "Sneak Away",
+            "id": "YMbCQd_LdBs",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/YMbCQd_LdBs/default.webp"
+        },
+        {
+            "label": "Intervene",
+            "id": "1dumcgS6cQo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/1dumcgS6cQo/default.webp"
+        },
+        {
+            "label": "I Love Scary Stories!",
+            "id": "ZL1zgAi_vcM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ZL1zgAi_vcM/default.webp"
+        },
+        {
+            "label": "Mark, Don't Use the Warp Core!",
+            "id": "Yfu54aRdYrY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Yfu54aRdYrY/default.webp"
+        },
+        {
+            "label": "Cut the Yellow Wire",
+            "id": "v-wQLpNJmr0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/v-wQLpNJmr0/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "ULSkPjBNCd8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ULSkPjBNCd8/default.webp"
+        },
+        {
+            "label": "Right",
+            "id": "w9u3uLLEF6U",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/w9u3uLLEF6U/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "nIiScoVQ9Rc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/nIiScoVQ9Rc/default.webp"
+        },
+        {
+            "label": "Right",
+            "id": "iiOu6cv6Cy4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/iiOu6cv6Cy4/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "WWqo6KfU_p0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/WWqo6KfU_p0/default.webp"
+        },
+        {
+            "label": "Left",
+            "id": "nyFV41oK67o",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/nyFV41oK67o/default.webp"
+        },
+        {
+            "label": "Right",
+            "id": "dBnFGiGN-3M",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/dBnFGiGN-3M/default.webp"
+        },
+        {
+            "label": "Let Go",
+            "id": "YdGoj6tnYNs",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/YdGoj6tnYNs/default.webp"
+        },
+        {
+            "label": "Hold On",
+            "id": "qx6PkwY-_Jc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/qx6PkwY-_Jc/default.webp"
+        },
+        {
+            "label": "A Heist with Markiplier",
+            "id": "9TjfkXmwbTs",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/9TjfkXmwbTs/default.webp"
+        },
+        {
+            "label": "Guns Blazing",
+            "id": "AJUy9Q3RGl8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/AJUy9Q3RGl8/default.webp"
+        },
+        {
+            "label": "All Sneaky Like",
+            "id": "dHEAIpQDPdA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/dHEAIpQDPdA/default.webp"
+        },
+        {
+            "label": "Helicopter",
+            "id": "d19r9sPihGM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/d19r9sPihGM/default.webp"
+        },
+        {
+            "label": "Car",
+            "id": "hu60fNlVmF0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/hu60fNlVmF0/default.webp"
+        },
+        {
+            "label": "Light Tunnel",
+            "id": "aPIHjZ7ik2U",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/aPIHjZ7ik2U/default.webp"
+        },
+        {
+            "label": "Dark Tunnel",
+            "id": "g16M54TNU8o",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/g16M54TNU8o/default.webp"
+        },
+        {
+            "label": "Rally the Prisoners",
+            "id": "Ttld8M6RmfI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Ttld8M6RmfI/default.webp"
+        },
+        {
+            "label": "Charm the Guards",
+            "id": "BYpxqtEfKpk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/BYpxqtEfKpk/default.webp"
+        },
+        {
+            "label": "Try to Fix",
+            "id": "WOkGbGV2Tcg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/WOkGbGV2Tcg/default.webp"
+        },
+        {
+            "label": "Walk to Base",
+            "id": "o33XENKcP8M",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/o33XENKcP8M/default.webp"
+        },
+        {
+            "label": "Wait For Rescue",
+            "id": "MIV53FtqA1A",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/MIV53FtqA1A/default.webp"
+        },
+        {
+            "label": "Row Home",
+            "id": "QUbuL0VN01o",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/QUbuL0VN01o/default.webp"
+        },
+        {
+            "label": "Split Up",
+            "id": "4YoY5OOyn6k",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/4YoY5OOyn6k/default.webp"
+        },
+        {
+            "label": "Don\u2019t Split Up",
+            "id": "PSxr_Q1yNvE",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/PSxr_Q1yNvE/default.webp"
+        },
+        {
+            "label": "Prison Life for Me",
+            "id": "4WoRALUW_8g",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/4WoRALUW_8g/default.webp"
+        },
+        {
+            "label": "I Want to Be Free",
+            "id": "SFbD8rM2S5c",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/SFbD8rM2S5c/default.webp"
+        },
+        {
+            "label": "Dig Dig Dig",
+            "id": "6HtWfuz1wEA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/6HtWfuz1wEA/default.webp"
+        },
+        {
+            "label": "What\u2019s That?",
+            "id": "tu8qAfSv4pQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/tu8qAfSv4pQ/default.webp"
+        },
+        {
+            "label": "I Don\u2019t Trust Strangers",
+            "id": "M4HiiGiRKJE",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/M4HiiGiRKJE/default.webp"
+        },
+        {
+            "label": "An Adventure Sounds Lovely",
+            "id": "xrWThWmZINE",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/xrWThWmZINE/default.webp"
+        },
+        {
+            "label": "Tell the Truth",
+            "id": "Nv12neoLzBw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Nv12neoLzBw/default.webp"
+        },
+        {
+            "label": "I\u2019m Fine!",
+            "id": "n6EH5NhxUo4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/n6EH5NhxUo4/default.webp"
+        },
+        {
+            "label": "I Know Nothing",
+            "id": "hYCiv0hvhcM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/hYCiv0hvhcM/default.webp"
+        },
+        {
+            "label": "I Know Everything",
+            "id": "ipGDwQDXcD0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ipGDwQDXcD0/default.webp"
+        },
+        {
+            "label": "Build a Sign",
+            "id": "UPzKET34slc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/UPzKET34slc/default.webp"
+        },
+        {
+            "label": "Find Shelter",
+            "id": "h-k59Ci_smg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/h-k59Ci_smg/default.webp"
+        },
+        {
+            "label": "Split Up",
+            "id": "WLDw07ew24g",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/WLDw07ew24g/default.webp"
+        },
+        {
+            "label": "Don't Split Up",
+            "id": "Skmtr32TyjA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Skmtr32TyjA/default.webp"
+        },
+        {
+            "label": "Thanks but No Thanks",
+            "id": "O6VB51PihWY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/O6VB51PihWY/default.webp"
+        },
+        {
+            "label": "Thanks and also Yes Please",
+            "id": "4Z4_t1LemOU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/4Z4_t1LemOU/default.webp"
+        },
+        {
+            "label": "What\u2019s in the Box?",
+            "id": "xuukkVAJ5wk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/xuukkVAJ5wk/default.webp"
+        },
+        {
+            "label": "Stick to the Plan",
+            "id": "6NdgRVlAmAo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/6NdgRVlAmAo/default.webp"
+        },
+        {
+            "label": "Oh HELL No!",
+            "id": "cn4G5KQQFHw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/cn4G5KQQFHw/default.webp"
+        },
+        {
+            "label": "This Seems Safe",
+            "id": "lSJT6ch3-GQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/lSJT6ch3-GQ/default.webp"
+        },
+        {
+            "label": "Don\u2019t Give the Statue",
+            "id": "Vy8hCbhZtvc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Vy8hCbhZtvc/default.webp"
+        },
+        {
+            "label": "Give the Statue",
+            "id": "zelFSJm6yu8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/zelFSJm6yu8/default.webp"
+        },
+        {
+            "label": "The Scientist",
+            "id": "-kqxCWQKPYI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/-kqxCWQKPYI/default.webp"
+        },
+        {
+            "label": "The Soldier",
+            "id": "5za3hRrNVeg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/5za3hRrNVeg/default.webp"
+        },
+        {
+            "label": "Golden Treasure",
+            "id": "VdwBhv69R54",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/VdwBhv69R54/default.webp"
+        },
+        {
+            "label": "Treasured Gold",
+            "id": "znKK8QMshHg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/znKK8QMshHg/default.webp"
+        },
+        {
+            "label": "Enter the Cave",
+            "id": "NrrnXtw23gI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/NrrnXtw23gI/default.webp"
+        },
+        {
+            "label": "RUN AWAY!!",
+            "id": "-EBnnTYEB80",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/-EBnnTYEB80/default.webp"
+        },
+        {
+            "label": "Split Up",
+            "id": "jH_OAoT-icU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/jH_OAoT-icU/default.webp"
+        },
+        {
+            "label": "Don\u2019t Split Up",
+            "id": "POf2YIskmn4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/POf2YIskmn4/default.webp"
+        },
+        {
+            "label": "Open the Box",
+            "id": "cI_hzj5g-aQ",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/cI_hzj5g-aQ/default.webp"
+        },
+        {
+            "label": "Shoot Bob",
+            "id": "kKIm9otZZBg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/kKIm9otZZBg/default.webp"
+        },
+        {
+            "label": "What\u2019s in the Box?",
+            "id": "_EjgHql3mJ0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/_EjgHql3mJ0/default.webp"
+        },
+        {
+            "label": "Stick to the Plan",
+            "id": "AS-mcpFmyMY",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/AS-mcpFmyMY/default.webp"
+        },
+        {
+            "label": "ABSOLUTELY NOT!!",
+            "id": "ex4vozijjdk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ex4vozijjdk/default.webp"
+        },
+        {
+            "label": "For the Greater Good",
+            "id": "N1xn5gXFch4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/N1xn5gXFch4/default.webp"
+        },
+        {
+            "label": "Ed's Hiding Something",
+            "id": "xtTTrN3oBIo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/xtTTrN3oBIo/default.webp"
+        },
+        {
+            "label": "I\u2019m Hiding Something",
+            "id": "Xe5GSBQcKmU",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Xe5GSBQcKmU/default.webp"
+        },
+        {
+            "label": "You First",
+            "id": "BXjHW86e4pc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/BXjHW86e4pc/default.webp"
+        },
+        {
+            "label": "Me First",
+            "id": "ojpitvj0aTg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ojpitvj0aTg/default.webp"
+        },
+        {
+            "label": "Split Up",
+            "id": "rJQdUfNcLt4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/rJQdUfNcLt4/default.webp"
+        },
+        {
+            "label": "Don\u2019t Split Up",
+            "id": "55wOk9zdwXM",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/55wOk9zdwXM/default.webp"
+        },
+        {
+            "label": "Open the Box",
+            "id": "9n7Via0ect4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/9n7Via0ect4/default.webp"
+        },
+        {
+            "label": "Shoot Wade",
+            "id": "XEdgaWtjEqg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/XEdgaWtjEqg/default.webp"
+        },
+        {
+            "label": "A Date with Markiplier",
+            "id": "yyU_1JD2wuA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/yyU_1JD2wuA/default.webp"
+        },
+        {
+            "label": "Tuna",
+            "id": "PCjbswYDp88",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/PCjbswYDp88/default.webp"
+        },
+        {
+            "label": "PB&J",
+            "id": "tj-11NRY64o",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/tj-11NRY64o/default.webp"
+        },
+        {
+            "label": "PAY",
+            "id": "D5CXycD8gnc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/D5CXycD8gnc/default.webp"
+        },
+        {
+            "label": "DON'T PAY",
+            "id": "23jTMFsrWdg",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/23jTMFsrWdg/default.webp"
+        },
+        {
+            "label": "HORROR",
+            "id": "q8eg2DypRC8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/q8eg2DypRC8/default.webp"
+        },
+        {
+            "label": "ROMANCE",
+            "id": "Utvtf8rCY4g",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Utvtf8rCY4g/default.webp"
+        },
+        {
+            "label": "ATTACK",
+            "id": "vO0wz9THGq0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/vO0wz9THGq0/default.webp"
+        },
+        {
+            "label": "DON'T ATTACK",
+            "id": "ahh3I6jP2sA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/ahh3I6jP2sA/default.webp"
+        },
+        {
+            "label": "FREEDOM!",
+            "id": "5L40rXqHsSk",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/5L40rXqHsSk/default.webp"
+        },
+        {
+            "label": "Don't move",
+            "id": "_ubzL1Bm6d8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi/_ubzL1Bm6d8/default.jpg"
+        },
+        {
+            "label": "Don't blink",
+            "id": "Ri8KuFz8RN4",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Ri8KuFz8RN4/default.webp"
+        },
+        {
+            "label": "relax",
+            "id": "n2faoFa3Bps",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/n2faoFa3Bps/default.webp"
+        },
+        {
+            "label": "LEAVE",
+            "id": "D0D8p9iaUEo",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/D0D8p9iaUEo/default.webp"
+        },
+        {
+            "label": "SHINY!",
+            "id": "30sVvojkvqw",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/30sVvojkvqw/default.webp"
+        },
+        {
+            "label": "ROAD",
+            "id": "o4-2iNTxu6E",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/o4-2iNTxu6E/default.webp"
+        },
+        {
+            "label": "PICK LOCK",
+            "id": "5Cu5rwRVkBc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/5Cu5rwRVkBc/default.webp"
+        },
+        {
+            "label": "DIG",
+            "id": "Jl9XIOZJ_pI",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/Jl9XIOZJ_pI/default.webp"
+        },
+        {
+            "label": "RIGHT",
+            "id": "-cYt1cav9f0",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/-cYt1cav9f0/default.webp"
+        },
+        {
+            "label": "LEFT",
+            "id": "veNHrGg4Gks",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/veNHrGg4Gks/default.webp"
+        },
+        {
+            "label": "YES",
+            "id": "H6tlXqFI-EA",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/H6tlXqFI-EA/default.webp"
+        },
+        {
+            "label": "NO",
+            "id": "RE14kkYVu5I",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/RE14kkYVu5I/default.webp"
+        },
+        {
+            "label": "PBJ",
+            "id": "lcrCkm2ED8M",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/lcrCkm2ED8M/default.webp"
+        },
+        {
+            "label": "TUNA",
+            "id": "a6C9jh9kB9Q",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/a6C9jh9kB9Q/default.webp"
+        },
+        {
+            "label": "STAY TOGETHER",
+            "id": "n-OUMryuYis",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/n-OUMryuYis/default.webp"
+        },
+        {
+            "label": "SPLIT UP",
+            "id": "yoHamTR5n1A",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/yoHamTR5n1A/default.webp"
+        },
+        {
+            "label": "MORE?",
+            "id": "2URDTFdgEO8",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/2URDTFdgEO8/default.webp"
+        },
+        {
+            "label": "EXIT",
+            "id": "BvdtC0sMHlc",
+            "shape": "image",
+            "image": "https://i.ytimg.com/vi_webp/BvdtC0sMHlc/default.webp"
+        }
+    ],
+    "edges": [
+        {
+            "from": "j64oZLF443g",
+            "to": "mGtFUm-sgh4",
+            "color": "red"
+        },
+        {
+            "from": "j64oZLF443g",
+            "to": "raIqPgW-quI",
+            "color": "red"
+        },
+        {
+            "from": "mGtFUm-sgh4",
+            "to": "HHlphhgN1kU",
+            "color": "red"
+        },
+        {
+            "from": "mGtFUm-sgh4",
+            "to": "5eG8rFt_JuY",
+            "color": "red"
+        },
+        {
+            "from": "raIqPgW-quI",
+            "to": "NK-u4ukbOFw",
+            "color": "red"
+        },
+        {
+            "from": "raIqPgW-quI",
+            "to": "Dq1BrxAXQLg",
+            "color": "red"
+        },
+        {
+            "from": "raIqPgW-quI",
+            "to": "Rm7nK2x_FWQ",
+            "color": "red"
+        },
+        {
+            "from": "HHlphhgN1kU",
+            "to": "8Figj37SoPg",
+            "color": "red"
+        },
+        {
+            "from": "HHlphhgN1kU",
+            "to": "ogrmyhb5gNI",
+            "color": "red"
+        },
+        {
+            "from": "5eG8rFt_JuY",
+            "to": "NK-u4ukbOFw",
+            "color": "red"
+        },
+        {
+            "from": "5eG8rFt_JuY",
+            "to": "Dq1BrxAXQLg",
+            "color": "red"
+        },
+        {
+            "from": "5eG8rFt_JuY",
+            "to": "Rm7nK2x_FWQ",
+            "color": "red"
+        },
+        {
+            "from": "NK-u4ukbOFw",
+            "to": "bYy_aAiTfYA",
+            "color": "red"
+        },
+        {
+            "from": "NK-u4ukbOFw",
+            "to": "uIMvjur42Vw",
+            "color": "red"
+        },
+        {
+            "from": "Dq1BrxAXQLg",
+            "to": "Tn1MkhNUaA4",
+            "color": "red"
+        },
+        {
+            "from": "Dq1BrxAXQLg",
+            "to": "uIMvjur42Vw",
+            "color": "red"
+        },
+        {
+            "from": "Rm7nK2x_FWQ",
+            "to": "bYy_aAiTfYA",
+            "color": "red"
+        },
+        {
+            "from": "Rm7nK2x_FWQ",
+            "to": "uIMvjur42Vw",
+            "color": "red"
+        },
+        {
+            "from": "8Figj37SoPg",
+            "to": "NK-u4ukbOFw",
+            "color": "red"
+        },
+        {
+            "from": "8Figj37SoPg",
+            "to": "Dq1BrxAXQLg",
+            "color": "red"
+        },
+        {
+            "from": "8Figj37SoPg",
+            "to": "Rm7nK2x_FWQ",
+            "color": "red"
+        },
+        {
+            "from": "ogrmyhb5gNI",
+            "to": "98bVPHiSY_k",
+            "color": "red"
+        },
+        {
+            "from": "ogrmyhb5gNI",
+            "to": "SKODGzV20LU",
+            "color": "red"
+        },
+        {
+            "from": "bYy_aAiTfYA",
+            "to": "7P9mpmsLSno",
+            "color": "red"
+        },
+        {
+            "from": "bYy_aAiTfYA",
+            "to": "Y0Ja_BrgGhA",
+            "color": "red"
+        },
+        {
+            "from": "uIMvjur42Vw",
+            "to": "7P9mpmsLSno",
+            "color": "red"
+        },
+        {
+            "from": "uIMvjur42Vw",
+            "to": "Y0Ja_BrgGhA",
+            "color": "red"
+        },
+        {
+            "from": "Tn1MkhNUaA4",
+            "to": "ch07UcMzWkQ",
+            "color": "red"
+        },
+        {
+            "from": "Tn1MkhNUaA4",
+            "to": "Y0Ja_BrgGhA",
+            "color": "red"
+        },
+        {
+            "from": "98bVPHiSY_k",
+            "to": "uQO4CLQhKuY",
+            "color": "red"
+        },
+        {
+            "from": "98bVPHiSY_k",
+            "to": "5nZZAmvRIuU",
+            "color": "red"
+        },
+        {
+            "from": "SKODGzV20LU",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "7P9mpmsLSno",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "Y0Ja_BrgGhA",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "ch07UcMzWkQ",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "uQO4CLQhKuY",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "5nZZAmvRIuU",
+            "to": "HcfjRwNr89Q",
+            "color": "red"
+        },
+        {
+            "from": "HcfjRwNr89Q",
+            "to": "wKNzPHIk0EY",
+            "color": "red"
+        },
+        {
+            "from": "HcfjRwNr89Q",
+            "to": "uoyvZ5mXiio",
+            "color": "red"
+        },
+        {
+            "from": "wKNzPHIk0EY",
+            "to": "bjxEL2A9F4Q",
+            "color": "red"
+        },
+        {
+            "from": "wKNzPHIk0EY",
+            "to": "uoyvZ5mXiio",
+            "color": "red"
+        },
+        {
+            "from": "uoyvZ5mXiio",
+            "to": "diaW8rX9CZg",
+            "color": "red"
+        },
+        {
+            "from": "uoyvZ5mXiio",
+            "to": "CXUKjHzoMl4",
+            "color": "red"
+        },
+        {
+            "from": "bjxEL2A9F4Q",
+            "to": "Qbr2cyEgWS4",
+            "color": "red"
+        },
+        {
+            "from": "bjxEL2A9F4Q",
+            "to": "uoyvZ5mXiio",
+            "color": "red"
+        },
+        {
+            "from": "diaW8rX9CZg",
+            "to": "g72tvDIu_Ys",
+            "color": "red"
+        },
+        {
+            "from": "diaW8rX9CZg",
+            "to": "YBDAQclN9jQ",
+            "color": "red"
+        },
+        {
+            "from": "CXUKjHzoMl4",
+            "to": "QgImksN6b3M",
+            "color": "red"
+        },
+        {
+            "from": "CXUKjHzoMl4",
+            "to": "wfdMicitgnA",
+            "color": "red"
+        },
+        {
+            "from": "Qbr2cyEgWS4",
+            "to": "uoyvZ5mXiio",
+            "color": "red"
+        },
+        {
+            "from": "Qbr2cyEgWS4",
+            "to": "wKNzPHIk0EY",
+            "color": "red"
+        },
+        {
+            "from": "g72tvDIu_Ys",
+            "to": "uj8TRJDz98E",
+            "color": "red"
+        },
+        {
+            "from": "g72tvDIu_Ys",
+            "to": "3cE9v0tdEGY",
+            "color": "red"
+        },
+        {
+            "from": "YBDAQclN9jQ",
+            "to": "QgImksN6b3M",
+            "color": "red"
+        },
+        {
+            "from": "YBDAQclN9jQ",
+            "to": "wfdMicitgnA",
+            "color": "red"
+        },
+        {
+            "from": "QgImksN6b3M",
+            "to": "aM-uQMUO6i4",
+            "color": "red"
+        },
+        {
+            "from": "QgImksN6b3M",
+            "to": "3De90tdLJmk",
+            "color": "red"
+        },
+        {
+            "from": "wfdMicitgnA",
+            "to": "FuQt2BhgCQo",
+            "color": "red"
+        },
+        {
+            "from": "wfdMicitgnA",
+            "to": "17r42pf7kwY",
+            "color": "red"
+        },
+        {
+            "from": "uj8TRJDz98E",
+            "to": "NW-UYcqwDpU",
+            "color": "red"
+        },
+        {
+            "from": "uj8TRJDz98E",
+            "to": "iMz8rZD_9hg",
+            "color": "red"
+        },
+        {
+            "from": "3cE9v0tdEGY",
+            "to": "NW-UYcqwDpU",
+            "color": "red"
+        },
+        {
+            "from": "3cE9v0tdEGY",
+            "to": "iMz8rZD_9hg",
+            "color": "red"
+        },
+        {
+            "from": "aM-uQMUO6i4",
+            "to": "FuQt2BhgCQo",
+            "color": "red"
+        },
+        {
+            "from": "aM-uQMUO6i4",
+            "to": "17r42pf7kwY",
+            "color": "red"
+        },
+        {
+            "from": "3De90tdLJmk",
+            "to": "NW-UYcqwDpU",
+            "color": "red"
+        },
+        {
+            "from": "3De90tdLJmk",
+            "to": "iMz8rZD_9hg",
+            "color": "red"
+        },
+        {
+            "from": "FuQt2BhgCQo",
+            "to": "7iJoWgYwL7g",
+            "color": "red"
+        },
+        {
+            "from": "FuQt2BhgCQo",
+            "to": "eoOePnBbGWY",
+            "color": "red"
+        },
+        {
+            "from": "17r42pf7kwY",
+            "to": "NW-UYcqwDpU",
+            "color": "red"
+        },
+        {
+            "from": "17r42pf7kwY",
+            "to": "iMz8rZD_9hg",
+            "color": "red"
+        },
+        {
+            "from": "NW-UYcqwDpU",
+            "to": "3TboquFEMFA",
+            "color": "red"
+        },
+        {
+            "from": "NW-UYcqwDpU",
+            "to": "jGGT5FHDhFI",
+            "color": "red"
+        },
+        {
+            "from": "iMz8rZD_9hg",
+            "to": "cjGsjagqkk4",
+            "color": "red"
+        },
+        {
+            "from": "iMz8rZD_9hg",
+            "to": "szDl_uKbOJg",
+            "color": "red"
+        },
+        {
+            "from": "7iJoWgYwL7g",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "eoOePnBbGWY",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "3TboquFEMFA",
+            "to": "4zQJNqRjadQ",
+            "color": "red"
+        },
+        {
+            "from": "3TboquFEMFA",
+            "to": "qeu7M8wIpyc",
+            "color": "red"
+        },
+        {
+            "from": "jGGT5FHDhFI",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "cjGsjagqkk4",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "szDl_uKbOJg",
+            "to": "VpyFw2-Cec4",
+            "color": "red"
+        },
+        {
+            "from": "szDl_uKbOJg",
+            "to": "DsZDtqK4f1A",
+            "color": "red"
+        },
+        {
+            "from": "4zQJNqRjadQ",
+            "to": "fGewtUPe7TI",
+            "color": "red"
+        },
+        {
+            "from": "4zQJNqRjadQ",
+            "to": "PteUZUCJ7iY",
+            "color": "red"
+        },
+        {
+            "from": "qeu7M8wIpyc",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "VpyFw2-Cec4",
+            "to": "fGewtUPe7TI",
+            "color": "red"
+        },
+        {
+            "from": "VpyFw2-Cec4",
+            "to": "PteUZUCJ7iY",
+            "color": "red"
+        },
+        {
+            "from": "DsZDtqK4f1A",
+            "to": "MJM6QneZbVA",
+            "color": "red"
+        },
+        {
+            "from": "DsZDtqK4f1A",
+            "to": "-Yn4Z-mPKMM",
+            "color": "red"
+        },
+        {
+            "from": "fGewtUPe7TI",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "PteUZUCJ7iY",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "MJM6QneZbVA",
+            "to": "g_ILOR7_mHw",
+            "color": "red"
+        },
+        {
+            "from": "MJM6QneZbVA",
+            "to": "6cARNW6O4sY",
+            "color": "red"
+        },
+        {
+            "from": "-Yn4Z-mPKMM",
+            "to": "j64oZLF443g",
+            "color": "red"
+        },
+        {
+            "from": "g_ILOR7_mHw",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "6cARNW6O4sY",
+            "to": "xAOv_zvXBQk",
+            "color": "red"
+        },
+        {
+            "from": "xAOv_zvXBQk",
+            "to": "dXBkC_-72vA",
+            "color": "blue"
+        },
+        {
+            "from": "xAOv_zvXBQk",
+            "to": "kcHe2hLE0PE",
+            "color": "blue"
+        },
+        {
+            "from": "dXBkC_-72vA",
+            "to": "slYiLYLvdV0",
+            "color": "blue"
+        },
+        {
+            "from": "dXBkC_-72vA",
+            "to": "sart_g4SXgM",
+            "color": "blue"
+        },
+        {
+            "from": "kcHe2hLE0PE",
+            "to": "slYiLYLvdV0",
+            "color": "blue"
+        },
+        {
+            "from": "kcHe2hLE0PE",
+            "to": "sart_g4SXgM",
+            "color": "blue"
+        },
+        {
+            "from": "slYiLYLvdV0",
+            "to": "E-ElzbdMBYA",
+            "color": "blue"
+        },
+        {
+            "from": "slYiLYLvdV0",
+            "to": "GDOfnMYMens",
+            "color": "blue"
+        },
+        {
+            "from": "sart_g4SXgM",
+            "to": "A8wiPLzzJ00",
+            "color": "blue"
+        },
+        {
+            "from": "sart_g4SXgM",
+            "to": "WW5oaCBpZXo",
+            "color": "blue"
+        },
+        {
+            "from": "E-ElzbdMBYA",
+            "to": "wE96fQwjPT4",
+            "color": "blue"
+        },
+        {
+            "from": "E-ElzbdMBYA",
+            "to": "z3tvzYvfkkQ",
+            "color": "blue"
+        },
+        {
+            "from": "GDOfnMYMens",
+            "to": "V2ucVWqe8p8",
+            "color": "blue"
+        },
+        {
+            "from": "GDOfnMYMens",
+            "to": "S_znm-UIGAI",
+            "color": "blue"
+        },
+        {
+            "from": "A8wiPLzzJ00",
+            "to": "V2ucVWqe8p8",
+            "color": "blue"
+        },
+        {
+            "from": "A8wiPLzzJ00",
+            "to": "S_znm-UIGAI",
+            "color": "blue"
+        },
+        {
+            "from": "WW5oaCBpZXo",
+            "to": "V2ucVWqe8p8",
+            "color": "blue"
+        },
+        {
+            "from": "WW5oaCBpZXo",
+            "to": "S_znm-UIGAI",
+            "color": "blue"
+        },
+        {
+            "from": "wE96fQwjPT4",
+            "to": "Lf7aoSTCtwE",
+            "color": "blue"
+        },
+        {
+            "from": "wE96fQwjPT4",
+            "to": "AkEXMKoUHEU",
+            "color": "blue"
+        },
+        {
+            "from": "z3tvzYvfkkQ",
+            "to": "Pwo3-jlT8e0",
+            "color": "blue"
+        },
+        {
+            "from": "z3tvzYvfkkQ",
+            "to": "ctjK7eET3bo",
+            "color": "blue"
+        },
+        {
+            "from": "z3tvzYvfkkQ",
+            "to": "kDIVnEgcOxU",
+            "color": "blue"
+        },
+        {
+            "from": "V2ucVWqe8p8",
+            "to": "wE96fQwjPT4",
+            "color": "blue"
+        },
+        {
+            "from": "V2ucVWqe8p8",
+            "to": "z3tvzYvfkkQ",
+            "color": "blue"
+        },
+        {
+            "from": "S_znm-UIGAI",
+            "to": "YyObr8Mg2RU",
+            "color": "blue"
+        },
+        {
+            "from": "S_znm-UIGAI",
+            "to": "3J2f_HIEoxU",
+            "color": "blue"
+        },
+        {
+            "from": "Lf7aoSTCtwE",
+            "to": "NlK43-FvAG4",
+            "color": "blue"
+        },
+        {
+            "from": "Lf7aoSTCtwE",
+            "to": "e-sOd94VQYg",
+            "color": "blue"
+        },
+        {
+            "from": "AkEXMKoUHEU",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "AkEXMKoUHEU",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "Pwo3-jlT8e0",
+            "to": "ZL1zgAi_vcM",
+            "color": "blue"
+        },
+        {
+            "from": "Pwo3-jlT8e0",
+            "to": "Yfu54aRdYrY",
+            "color": "blue"
+        },
+        {
+            "from": "Pwo3-jlT8e0",
+            "to": "v-wQLpNJmr0",
+            "color": "blue"
+        },
+        {
+            "from": "ctjK7eET3bo",
+            "to": "ZL1zgAi_vcM",
+            "color": "blue"
+        },
+        {
+            "from": "ctjK7eET3bo",
+            "to": "Yfu54aRdYrY",
+            "color": "blue"
+        },
+        {
+            "from": "ctjK7eET3bo",
+            "to": "v-wQLpNJmr0",
+            "color": "blue"
+        },
+        {
+            "from": "kDIVnEgcOxU",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "kDIVnEgcOxU",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "YyObr8Mg2RU",
+            "to": "wE96fQwjPT4",
+            "color": "blue"
+        },
+        {
+            "from": "YyObr8Mg2RU",
+            "to": "z3tvzYvfkkQ",
+            "color": "blue"
+        },
+        {
+            "from": "3J2f_HIEoxU",
+            "to": "wE96fQwjPT4",
+            "color": "blue"
+        },
+        {
+            "from": "3J2f_HIEoxU",
+            "to": "z3tvzYvfkkQ",
+            "color": "blue"
+        },
+        {
+            "from": "NlK43-FvAG4",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "NlK43-FvAG4",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "e-sOd94VQYg",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "e-sOd94VQYg",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "YMbCQd_LdBs",
+            "to": "ULSkPjBNCd8",
+            "color": "blue"
+        },
+        {
+            "from": "YMbCQd_LdBs",
+            "to": "w9u3uLLEF6U",
+            "color": "blue"
+        },
+        {
+            "from": "1dumcgS6cQo",
+            "to": "ULSkPjBNCd8",
+            "color": "blue"
+        },
+        {
+            "from": "1dumcgS6cQo",
+            "to": "w9u3uLLEF6U",
+            "color": "blue"
+        },
+        {
+            "from": "ZL1zgAi_vcM",
+            "to": "Lf7aoSTCtwE",
+            "color": "blue"
+        },
+        {
+            "from": "ZL1zgAi_vcM",
+            "to": "AkEXMKoUHEU",
+            "color": "blue"
+        },
+        {
+            "from": "Yfu54aRdYrY",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "Yfu54aRdYrY",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "v-wQLpNJmr0",
+            "to": "YMbCQd_LdBs",
+            "color": "blue"
+        },
+        {
+            "from": "v-wQLpNJmr0",
+            "to": "1dumcgS6cQo",
+            "color": "blue"
+        },
+        {
+            "from": "ULSkPjBNCd8",
+            "to": "nIiScoVQ9Rc",
+            "color": "blue"
+        },
+        {
+            "from": "ULSkPjBNCd8",
+            "to": "iiOu6cv6Cy4",
+            "color": "blue"
+        },
+        {
+            "from": "w9u3uLLEF6U",
+            "to": "ULSkPjBNCd8",
+            "color": "blue"
+        },
+        {
+            "from": "w9u3uLLEF6U",
+            "to": "iiOu6cv6Cy4",
+            "color": "blue"
+        },
+        {
+            "from": "nIiScoVQ9Rc",
+            "to": "WWqo6KfU_p0",
+            "color": "blue"
+        },
+        {
+            "from": "nIiScoVQ9Rc",
+            "to": "w9u3uLLEF6U",
+            "color": "blue"
+        },
+        {
+            "from": "iiOu6cv6Cy4",
+            "to": "nyFV41oK67o",
+            "color": "blue"
+        },
+        {
+            "from": "iiOu6cv6Cy4",
+            "to": "dBnFGiGN-3M",
+            "color": "blue"
+        },
+        {
+            "from": "WWqo6KfU_p0",
+            "to": "YdGoj6tnYNs",
+            "color": "blue"
+        },
+        {
+            "from": "WWqo6KfU_p0",
+            "to": "qx6PkwY-_Jc",
+            "color": "blue"
+        },
+        {
+            "from": "nyFV41oK67o",
+            "to": "WWqo6KfU_p0",
+            "color": "blue"
+        },
+        {
+            "from": "nyFV41oK67o",
+            "to": "dBnFGiGN-3M",
+            "color": "blue"
+        },
+        {
+            "from": "dBnFGiGN-3M",
+            "to": "YdGoj6tnYNs",
+            "color": "blue"
+        },
+        {
+            "from": "dBnFGiGN-3M",
+            "to": "qx6PkwY-_Jc",
+            "color": "blue"
+        },
+        {
+            "from": "YdGoj6tnYNs",
+            "to": "mGtFUm-sgh4",
+            "color": "blue"
+        },
+        {
+            "from": "YdGoj6tnYNs",
+            "to": "raIqPgW-quI",
+            "color": "blue"
+        },
+        {
+            "from": "qx6PkwY-_Jc",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "9TjfkXmwbTs",
+            "to": "AJUy9Q3RGl8",
+            "color": "blue"
+        },
+        {
+            "from": "9TjfkXmwbTs",
+            "to": "dHEAIpQDPdA",
+            "color": "blue"
+        },
+        {
+            "from": "AJUy9Q3RGl8",
+            "to": "d19r9sPihGM",
+            "color": "blue"
+        },
+        {
+            "from": "AJUy9Q3RGl8",
+            "to": "hu60fNlVmF0",
+            "color": "blue"
+        },
+        {
+            "from": "dHEAIpQDPdA",
+            "to": "aPIHjZ7ik2U",
+            "color": "blue"
+        },
+        {
+            "from": "dHEAIpQDPdA",
+            "to": "g16M54TNU8o",
+            "color": "blue"
+        },
+        {
+            "from": "d19r9sPihGM",
+            "to": "Ttld8M6RmfI",
+            "color": "blue"
+        },
+        {
+            "from": "d19r9sPihGM",
+            "to": "BYpxqtEfKpk",
+            "color": "blue"
+        },
+        {
+            "from": "hu60fNlVmF0",
+            "to": "WOkGbGV2Tcg",
+            "color": "blue"
+        },
+        {
+            "from": "hu60fNlVmF0",
+            "to": "o33XENKcP8M",
+            "color": "blue"
+        },
+        {
+            "from": "aPIHjZ7ik2U",
+            "to": "MIV53FtqA1A",
+            "color": "blue"
+        },
+        {
+            "from": "aPIHjZ7ik2U",
+            "to": "QUbuL0VN01o",
+            "color": "blue"
+        },
+        {
+            "from": "g16M54TNU8o",
+            "to": "4YoY5OOyn6k",
+            "color": "blue"
+        },
+        {
+            "from": "g16M54TNU8o",
+            "to": "PSxr_Q1yNvE",
+            "color": "blue"
+        },
+        {
+            "from": "Ttld8M6RmfI",
+            "to": "4WoRALUW_8g",
+            "color": "blue"
+        },
+        {
+            "from": "Ttld8M6RmfI",
+            "to": "SFbD8rM2S5c",
+            "color": "blue"
+        },
+        {
+            "from": "BYpxqtEfKpk",
+            "to": "6HtWfuz1wEA",
+            "color": "blue"
+        },
+        {
+            "from": "BYpxqtEfKpk",
+            "to": "tu8qAfSv4pQ",
+            "color": "blue"
+        },
+        {
+            "from": "WOkGbGV2Tcg",
+            "to": "M4HiiGiRKJE",
+            "color": "blue"
+        },
+        {
+            "from": "WOkGbGV2Tcg",
+            "to": "xrWThWmZINE",
+            "color": "blue"
+        },
+        {
+            "from": "o33XENKcP8M",
+            "to": "Nv12neoLzBw",
+            "color": "blue"
+        },
+        {
+            "from": "o33XENKcP8M",
+            "to": "n6EH5NhxUo4",
+            "color": "blue"
+        },
+        {
+            "from": "MIV53FtqA1A",
+            "to": "hYCiv0hvhcM",
+            "color": "blue"
+        },
+        {
+            "from": "MIV53FtqA1A",
+            "to": "ipGDwQDXcD0",
+            "color": "blue"
+        },
+        {
+            "from": "QUbuL0VN01o",
+            "to": "UPzKET34slc",
+            "color": "blue"
+        },
+        {
+            "from": "QUbuL0VN01o",
+            "to": "h-k59Ci_smg",
+            "color": "blue"
+        },
+        {
+            "from": "4YoY5OOyn6k",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "PSxr_Q1yNvE",
+            "to": "WLDw07ew24g",
+            "color": "blue"
+        },
+        {
+            "from": "PSxr_Q1yNvE",
+            "to": "Skmtr32TyjA",
+            "color": "blue"
+        },
+        {
+            "from": "4WoRALUW_8g",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "SFbD8rM2S5c",
+            "to": "O6VB51PihWY",
+            "color": "blue"
+        },
+        {
+            "from": "SFbD8rM2S5c",
+            "to": "4Z4_t1LemOU",
+            "color": "blue"
+        },
+        {
+            "from": "6HtWfuz1wEA",
+            "to": "xuukkVAJ5wk",
+            "color": "blue"
+        },
+        {
+            "from": "6HtWfuz1wEA",
+            "to": "6NdgRVlAmAo",
+            "color": "blue"
+        },
+        {
+            "from": "tu8qAfSv4pQ",
+            "to": "cn4G5KQQFHw",
+            "color": "blue"
+        },
+        {
+            "from": "tu8qAfSv4pQ",
+            "to": "lSJT6ch3-GQ",
+            "color": "blue"
+        },
+        {
+            "from": "M4HiiGiRKJE",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "xrWThWmZINE",
+            "to": "Vy8hCbhZtvc",
+            "color": "blue"
+        },
+        {
+            "from": "xrWThWmZINE",
+            "to": "zelFSJm6yu8",
+            "color": "blue"
+        },
+        {
+            "from": "Nv12neoLzBw",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "n6EH5NhxUo4",
+            "to": "-kqxCWQKPYI",
+            "color": "blue"
+        },
+        {
+            "from": "n6EH5NhxUo4",
+            "to": "5za3hRrNVeg",
+            "color": "blue"
+        },
+        {
+            "from": "hYCiv0hvhcM",
+            "to": "VdwBhv69R54",
+            "color": "blue"
+        },
+        {
+            "from": "hYCiv0hvhcM",
+            "to": "znKK8QMshHg",
+            "color": "blue"
+        },
+        {
+            "from": "ipGDwQDXcD0",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "UPzKET34slc",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "h-k59Ci_smg",
+            "to": "NrrnXtw23gI",
+            "color": "blue"
+        },
+        {
+            "from": "h-k59Ci_smg",
+            "to": "-EBnnTYEB80",
+            "color": "blue"
+        },
+        {
+            "from": "WLDw07ew24g",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "Skmtr32TyjA",
+            "to": "jH_OAoT-icU",
+            "color": "blue"
+        },
+        {
+            "from": "Skmtr32TyjA",
+            "to": "POf2YIskmn4",
+            "color": "blue"
+        },
+        {
+            "from": "O6VB51PihWY",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "4Z4_t1LemOU",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "xuukkVAJ5wk",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "6NdgRVlAmAo",
+            "to": "cI_hzj5g-aQ",
+            "color": "blue"
+        },
+        {
+            "from": "6NdgRVlAmAo",
+            "to": "kKIm9otZZBg",
+            "color": "blue"
+        },
+        {
+            "from": "cn4G5KQQFHw",
+            "to": "_EjgHql3mJ0",
+            "color": "blue"
+        },
+        {
+            "from": "cn4G5KQQFHw",
+            "to": "AS-mcpFmyMY",
+            "color": "blue"
+        },
+        {
+            "from": "lSJT6ch3-GQ",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "Vy8hCbhZtvc",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "zelFSJm6yu8",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "-kqxCWQKPYI",
+            "to": "ex4vozijjdk",
+            "color": "blue"
+        },
+        {
+            "from": "-kqxCWQKPYI",
+            "to": "N1xn5gXFch4",
+            "color": "blue"
+        },
+        {
+            "from": "5za3hRrNVeg",
+            "to": "xtTTrN3oBIo",
+            "color": "blue"
+        },
+        {
+            "from": "5za3hRrNVeg",
+            "to": "Xe5GSBQcKmU",
+            "color": "blue"
+        },
+        {
+            "from": "VdwBhv69R54",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "znKK8QMshHg",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "NrrnXtw23gI",
+            "to": "BXjHW86e4pc",
+            "color": "blue"
+        },
+        {
+            "from": "NrrnXtw23gI",
+            "to": "ojpitvj0aTg",
+            "color": "blue"
+        },
+        {
+            "from": "-EBnnTYEB80",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "jH_OAoT-icU",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "POf2YIskmn4",
+            "to": "rJQdUfNcLt4",
+            "color": "blue"
+        },
+        {
+            "from": "POf2YIskmn4",
+            "to": "55wOk9zdwXM",
+            "color": "blue"
+        },
+        {
+            "from": "cI_hzj5g-aQ",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "kKIm9otZZBg",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "_EjgHql3mJ0",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "AS-mcpFmyMY",
+            "to": "9n7Via0ect4",
+            "color": "blue"
+        },
+        {
+            "from": "AS-mcpFmyMY",
+            "to": "XEdgaWtjEqg",
+            "color": "blue"
+        },
+        {
+            "from": "ex4vozijjdk",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "N1xn5gXFch4",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "xtTTrN3oBIo",
+            "to": "PCjbswYDp88",
+            "color": "blue"
+        },
+        {
+            "from": "xtTTrN3oBIo",
+            "to": "tj-11NRY64o",
+            "color": "blue"
+        },
+        {
+            "from": "Xe5GSBQcKmU",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "BXjHW86e4pc",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "ojpitvj0aTg",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "rJQdUfNcLt4",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "55wOk9zdwXM",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "9n7Via0ect4",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "XEdgaWtjEqg",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "yyU_1JD2wuA",
+            "to": "D5CXycD8gnc",
+            "color": "blue"
+        },
+        {
+            "from": "yyU_1JD2wuA",
+            "to": "23jTMFsrWdg",
+            "color": "blue"
+        },
+        {
+            "from": "PCjbswYDp88",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "tj-11NRY64o",
+            "to": "9TjfkXmwbTs",
+            "color": "blue"
+        },
+        {
+            "from": "D5CXycD8gnc",
+            "to": "q8eg2DypRC8",
+            "color": "blue"
+        },
+        {
+            "from": "D5CXycD8gnc",
+            "to": "Utvtf8rCY4g",
+            "color": "blue"
+        },
+        {
+            "from": "23jTMFsrWdg",
+            "to": "vO0wz9THGq0",
+            "color": "blue"
+        },
+        {
+            "from": "23jTMFsrWdg",
+            "to": "ahh3I6jP2sA",
+            "color": "blue"
+        },
+        {
+            "from": "q8eg2DypRC8",
+            "to": "5L40rXqHsSk",
+            "color": "blue"
+        },
+        {
+            "from": "q8eg2DypRC8",
+            "to": "_ubzL1Bm6d8",
+            "color": "blue"
+        },
+        {
+            "from": "q8eg2DypRC8",
+            "to": "Ri8KuFz8RN4",
+            "color": "blue"
+        },
+        {
+            "from": "q8eg2DypRC8",
+            "to": "n2faoFa3Bps",
+            "color": "blue"
+        },
+        {
+            "from": "Utvtf8rCY4g",
+            "to": "q8eg2DypRC8",
+            "color": "blue"
+        },
+        {
+            "from": "Utvtf8rCY4g",
+            "to": "D0D8p9iaUEo",
+            "color": "blue"
+        },
+        {
+            "from": "vO0wz9THGq0",
+            "to": "30sVvojkvqw",
+            "color": "blue"
+        },
+        {
+            "from": "vO0wz9THGq0",
+            "to": "o4-2iNTxu6E",
+            "color": "blue"
+        },
+        {
+            "from": "ahh3I6jP2sA",
+            "to": "5Cu5rwRVkBc",
+            "color": "blue"
+        },
+        {
+            "from": "ahh3I6jP2sA",
+            "to": "Jl9XIOZJ_pI",
+            "color": "blue"
+        },
+        {
+            "from": "5L40rXqHsSk",
+            "to": "-cYt1cav9f0",
+            "color": "blue"
+        },
+        {
+            "from": "5L40rXqHsSk",
+            "to": "veNHrGg4Gks",
+            "color": "blue"
+        },
+        {
+            "from": "D0D8p9iaUEo",
+            "to": "H6tlXqFI-EA",
+            "color": "blue"
+        },
+        {
+            "from": "D0D8p9iaUEo",
+            "to": "RE14kkYVu5I",
+            "color": "blue"
+        },
+        {
+            "from": "30sVvojkvqw",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "o4-2iNTxu6E",
+            "to": "lcrCkm2ED8M",
+            "color": "blue"
+        },
+        {
+            "from": "o4-2iNTxu6E",
+            "to": "a6C9jh9kB9Q",
+            "color": "blue"
+        },
+        {
+            "from": "5Cu5rwRVkBc",
+            "to": "n-OUMryuYis",
+            "color": "blue"
+        },
+        {
+            "from": "5Cu5rwRVkBc",
+            "to": "yoHamTR5n1A",
+            "color": "blue"
+        },
+        {
+            "from": "-cYt1cav9f0",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "veNHrGg4Gks",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "H6tlXqFI-EA",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "RE14kkYVu5I",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "lcrCkm2ED8M",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "a6C9jh9kB9Q",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "n-OUMryuYis",
+            "to": "2URDTFdgEO8",
+            "color": "blue"
+        },
+        {
+            "from": "n-OUMryuYis",
+            "to": "BvdtC0sMHlc",
+            "color": "blue"
+        },
+        {
+            "from": "yoHamTR5n1A",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "2URDTFdgEO8",
+            "to": "yyU_1JD2wuA",
+            "color": "blue"
+        },
+        {
+            "from": "BvdtC0sMHlc",
+            "to": "5Cu5rwRVkBc",
+            "color": "blue"
+        },
+        {
+            "from": "BvdtC0sMHlc",
+            "to": "Jl9XIOZJ_pI",
+            "color": "blue"
+        }
+    ]
+}
+
+                // parsing and collecting nodes and edges from the python
+                nodes = new vis.DataSet(data.nodes);
+                edges = new vis.DataSet(data.edges);
+
+                // adding nodes and edges to the graph
+                data = {nodes: nodes, edges: edges};
+
+                var options = {
+                    "configure": {
+                        "enabled": false
+                    },
+                    "edges": {
+                        "color": "black",
+                    "arrows": {
+                        "to": true
+                    },
+                        "smooth": {
+                            "enabled": false,
+                            "type": "continuous"
+                        },
+                    },
+                    "nodes": {
+                        "color": "red",
+                        "shadow": true,
+                    },
+                    "interaction": {
+                        "dragNodes": true,
+                        "hideEdgesOnDrag": false,
+                        "hideNodesOnDrag": false
+                    },
+                    "physics": {
+                        "enabled": true,
+                        "stabilization": {
+                            "enabled": true,
+                            "fit": true,
+                            "iterations": 1000,
+                            "onlyDynamicEdges": false,
+                            "updateInterval": 50
+                        }
+                    }
+                };
+                
+                
+
+                network = new vis.Network(container, data, options);
+
+                network.on("doubleClick", (params => {
+                    console.log(params.nodes[0]);
+                    window.open('https://www.youtube.com/watch?v=' + params.nodes[0], '_blank');
+                }));
+
+                
+
+                return network;
+
+            }
+
+            drawGraph();
+
+        </script>
+    </body>
+</html>
