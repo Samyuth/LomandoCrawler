@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Mar 18 15:50:22 2022
+
 @author: Sagi
 """
 
@@ -14,7 +15,9 @@ Ascii format for leveled tree
    |- B --- D --- E --- F
 A -|
    |- C --- D
+
 Z --- C
+
 // on move to next child pos+= 2
 0              |- G   <-- pos_b, pos_c, pos_g
 1        |- C -|
@@ -40,7 +43,6 @@ class Graph:
         self._levels = []
         self._found = set()
         self._num_descendents = dict()
-        self.__rows = None
 
     # Method to plot digraph with matplotlib
     def plot(self):
@@ -105,105 +107,110 @@ class Graph:
     def get_num_descendents(self):
         return self._num_descendents
         
-    # Returns a leveled tree structure
-    # Driver function for generation algorithm
+    # Generates the leveled tree structure
     def _create_leveled_tree(self):
-        sources = self.find_sources()
-        # Call the builder functions for each of the starting nodes
-        for node in sources:
-            self.__tree_generator(0, node)
-            self.__find_num_descendents(node)
-           
-    # getting the max level size as well as label length
-    def __get_max_level_size(self):
-        if (len(self._levels) == 0):
-            self._create_leveled_tree()
-        # getting max width by number of leaf nodes for root nodes
-        max_width = sum([self._num_descendents[node] for node in self._levels[0]])
-        # getting max node label width width
-        max_len = max([len(node) for node in self.graph.nodes])
-        return (max_width, max_len)
-    
-    # Recursively building out a tree from a node
-    # takes as an argument the starting position
-    def __build_tree_string(self, node, pos, max_len, depth):
-        children = [edge[1] for edge in self.graph.out_edges(node)]
-        
-        # leaf node case
-        if len(children) == 0 or node in self._found:
-            # adding to the found set
-            self._found.add(node)
-            # printing out
-            outstr = "{0:^{1}}".format(node, max_len)
-            for i in range(max_len):
-                self.__rows[pos][depth*(max_len + 5)+i] = outstr[i]
-            # incrementing position
-            return pos + 2  
-        
-        self._found.add(node)
-        
-        node_width = 2 * self._num_descendents[node] - 1
-        
-        # getting the width hanging out from the first child and last child subtree
-        if (2*self._num_descendents[children[0]]-1)//2 == -1:
-            first_child_pos = pos
-        else:
-            first_child_pos = pos + (2*self._num_descendents[children[0]]-1)//2
-        if (2*self._num_descendents[children[-1]]-1)//2 == -1:
-            last_child_pos = pos + node_width - 1
-        else:
-            last_child_pos = pos + node_width - 1 - (2*self._num_descendents[children[-1]]-1)//2
-        node_pos = first_child_pos + (last_child_pos - first_child_pos)//2
+        self._levels = []
+        # Use BFS to generate a leveled tree
+        queue1 = [[node, None] for node in self.find_sources()] # first index is the node, second is the parent
+        queue2 = []
+        self._found = set()
+        while (len(queue1) > 0 or len(queue2) > 0):
+            self._levels.append([]) # adding a new level
+            # doing the search on a queue
+            while(len(queue1) > 0):
+                node = queue1.pop(0)
 
-        # Setting the node by copying
-        outstr = "{0:^{1}}".format(node, max_len)
-        for i in range(max_len):
-            self.__rows[node_pos][depth*(max_len + 5)+i] = outstr[i]
-        # Printing line from node
-        if (len(children) == 1):
-            self.__rows[node_pos][depth*(max_len + 5)+ max_len + 1] = "-"
-            self.__rows[node_pos][depth*(max_len + 5)+ max_len + 2] = "-"
-            self.__rows[node_pos][depth*(max_len + 5)+ max_len + 3] = "-"
-        elif (len(children) > 1):
-            self.__rows[node_pos][depth*(max_len + 5)+ max_len + 1] = "-"
-            # When there are multiplie children print a flat line
-            for i in range(first_child_pos, last_child_pos+1):
-                self.__rows[i][depth*(max_len + 5)+ max_len + 2] = "|"
-        # Print a dash at the location of the child node and call child
-        for child in children:
-            if (2*self._num_descendents[child]-1)//2 == - 1:
-                child_pos = pos
-            else:
-                child_pos = pos + (2*self._num_descendents[child]-1)//2
-            self.__rows[child_pos][depth*(max_len + 5)+ max_len + 3] = "-"
-            pos = self.__build_tree_string(child, pos, max_len, depth+1)
+                # Continuing the search or denoting a node as a reference
+                if (node[0] in self._found):
+                    node.append(False)
+                    self.graph.remove_edge(node[1], node[0])
+                    # self.graph.remove_edges_from(list(self.graph.out_edges(node[0])))
+                else:
+                    node.append(True)
+                    self._found.add(node[0])
+                    for edge in list(self.graph.out_edges(node[0])):
+                        queue2.append([edge[1], edge[0]])
+                
+                # Adding to the level
+                self._levels[-1].append(node)
 
-        return pos
-    
+            # Swapping queues
+            queue1 = queue2
+            queue2 = []
+
     # Getter for the leveled tree structure
     def get_leveled_tree(self):
         self._create_leveled_tree()
         return self._levels
 
+    # Getting a format that is usable for rendering on the frontend
+    def get_grid_map_output(self):
+        # Creating the leveled tree
+        self._create_leveled_tree()
+
+        # Initializing the number of descendents
+        for node in self.find_sources():
+            self.__find_num_descendents(node)
+
+        # Creating the final mapping
+        node_mapping = dict()
+        for i in range(len(self._levels)):
+            start = 0
+            parent = None
+            for node in self._levels[i]:
+                # Finding the parent
+                old_parent = parent
+                parent = node[1]
+
+                # Checking if the parent is the same as the previous node
+                if old_parent == parent:
+                    parent = False
+
+                # Updating the start if needed
+                if parent != False and parent in node_mapping:
+                    start = node_mapping[parent][0][2]
+
+                # Calculations for the coordinates
+                end = start + (1 if (node[2] == False or self._num_descendents[node[0]] == 0)
+                    else self._num_descendents[node[0]])
+
+                node.append(start) # start x
+                node.append(end) # end x
+                node.append(i) # y
+
+                start = end
+
+                # Updating the node mapping
+                if (node[2] == True):
+                    node_mapping[node[0]] = [node[1:]]
+                else:
+                    node_mapping[node[0]].append(node[1:])
+
+        return node_mapping
+
     # Sideways tree output
     def __str__(self):
-        max_width, max_len = self.__get_max_level_size()
-        
-        # Initializing variables
-        depth = len(self._levels)
-        str_depth = (5*(depth-1) + max_len * depth)
-        self.__rows = [[" "] * str_depth for i in range(2 * max_width - 1)]
-        self._found = set()
+        # Using this function to get a correct grid
+        self.get_grid_map_output()
 
-        pos = 0
-        for node in self._levels[0]:
-            pos = self.__build_tree_string(node, pos, max_len, 0)
+        # Output array
+        width = self._levels[0][-1][4]
+        depth = len(self._levels)
+        out_arr = [[None] * width for i in range(depth)]
+
+        for level in self._levels:
+            for node in level:
+                for i in range(node[3], node[4]):
+                    out_arr[node[5]][i] = node[0]
+
+        output = ""
+        for level in out_arr:
+            output += str(level) + "\n"
         
-        return "\n".join(["".join(self.__rows[i]) for i in range(len(self.__rows))])
+        return output
         
 if __name__ == "__main__":
     graph = nx.MultiDiGraph()
-    graph.add_node("abc")
     graph.add_node("a")
     graph.add_node("b")
     graph.add_node("c")
@@ -211,20 +218,20 @@ if __name__ == "__main__":
     graph.add_node("e")
     graph.add_node("f")
     graph.add_node("z")
-    graph.add_edge("b", "abc")
-    graph.add_edge("b", "a")
-    graph.add_edge("b", "c")
-    graph.add_edge("c", "d")
-    graph.add_edge("abc", "d")
-    graph.add_edge("d", "e")
-    graph.add_edge("e", "f")  
+    graph.add_edge("a", "b")
+    graph.add_edge("a", "c")
     graph.add_edge("z", "c")
+    graph.add_edge("b", "d")
+    graph.add_edge("c", "d")
+    graph.add_edge("d", "e")
+    graph.add_edge("e", "f")
     
     true_graph = Graph(graph)
     
     #print(true_graph.get_leveled_tree())
     print(true_graph)
     #print(true_graph.get_num_descendents())
+    # true_graph.plot_pretty()
     
     graph2 = nx.MultiDiGraph()
     graph2.add_node("a")
