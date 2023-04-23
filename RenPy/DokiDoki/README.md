@@ -27,9 +27,9 @@
 - Done a network graph of the parsed game will open in your browser
 
 ## Development Plans
-- Continue development for doki doki parse at it seems to be one of the more advanced renpy games
+- Continue development for doki doki parse as it seems to be one of the more advanced renpy games
 - Handle implicit flows more properly (that is when they actually make a meaninfull connection)
 - Try to account for random logic for a node which doki doki uses
 - Look at different ways to plot plotly is very nice but pyplot is not as nice for graphs with many nodes like doki doki
-- Possibly look into pulling images from the game and using those to represent choices instead of nodes
+- Possibly look into pulling images from the game and using those to represent choices as the nodes
 For now those are the next major development steps
