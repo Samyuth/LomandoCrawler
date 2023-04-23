@@ -57,7 +57,7 @@ class RpyNode:
                     elif option_line == "":
                         break
 
-class NscriptParser:
+class RenpyParser:
     def __init__(self, file_list):
         self.file_list = file_list
         self.nodes = {}
@@ -159,7 +159,7 @@ def get_rpy_files(directory):
 if __name__ == "__main__":
     rpy_files_path = "C:\\Users\\cstec\\Desktop\\Stuff\\craweler\\rpy_files"
     file_list = get_rpy_files(rpy_files_path)
-    parser = NscriptParser(file_list)
+    parser = RenpyParser(file_list)
     parser.parse_file()
     G = parser.build_graph()
     #parser.plot_graph(G)
